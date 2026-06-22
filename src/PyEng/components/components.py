@@ -96,9 +96,6 @@ class Component:
     if add:
       self.components_manager.add_element(self)
 
-  def update(self) -> None:
-    pass
-
 
 class SystemComponent(Component):  # Singleton
   """System components that are singletons.
@@ -132,7 +129,7 @@ class GameComponent(Component):
     pass
 
   def update(self, dt):
-    """Called every frame. Handles Logic (void Update())."""
+    """Called every frame. Handles Logic."""
     pass
 
   def draw(self, screen):
