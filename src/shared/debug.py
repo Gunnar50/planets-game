@@ -1,7 +1,7 @@
 from typing import Any
 
 
-class LOGGER:
+class Logger:
   @staticmethod
   def info(message: Any = ''):
     print(f'INFO: {message}')

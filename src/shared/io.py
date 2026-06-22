@@ -9,7 +9,7 @@ import pygame
 
 from src.shared import exceptions
 from src.shared import serialisers
-from src.shared.debug import LOGGER
+from src.shared.debug import Logger
 
 BlueprintType = TypeVar('BlueprintType')
 ModelType = TypeVar('ModelType', bound=pydantic.BaseModel)
@@ -99,6 +99,6 @@ def get_data_model(
     raise exceptions.FailedToGetDataModel('Error initialising model', context)
 
   if json_data:
-    LOGGER.warning(f'Remaining data that could not be loaded: {json_data}')
+    Logger.warning(f'Remaining data that could not be loaded: {json_data}')
 
   return cast(BlueprintType, result)

@@ -3,7 +3,7 @@ from collections.abc import Iterable, Iterator
 from typing import TypeVar
 
 from src.shared import exceptions
-from src.shared.debug import LOGGER
+from src.shared.debug import Logger
 
 # Type variable RegistrableType, which is a subclass of Registrable
 RegistrableType = TypeVar('RegistrableType', bound='Registrable')
@@ -39,7 +39,7 @@ class HashRegistry(Iterable[RegistrableType]):
   def get_null(self, name: str) -> RegistrableType | None:
     item = self.map.get(name)
     if item is None:
-      LOGGER.warning(
+      Logger.warning(
         f'No entry found in {self.registry_name} registry with ID: {name}'
       )
     return item

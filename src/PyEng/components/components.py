@@ -2,7 +2,7 @@ from collections import defaultdict
 from typing import Any, TYPE_CHECKING
 
 from src.shared import exceptions
-from src.shared.debug import LOGGER
+from src.shared.debug import Logger
 
 if TYPE_CHECKING:
   from src.Game.main.game_manager import GameManager
@@ -31,18 +31,18 @@ class ComponentManager:  # Singleton
     # Prevent duplicates of the system elements
     if isinstance(component, SystemComponent):
       if component.class_name not in self.system_components_by_name.keys():
-        LOGGER.info(f'Adding component: {component}')
+        Logger.info(f'Adding component: {component!r}')
         self.system_components_by_name[component.class_name] = component
       else:
         raise exceptions.ComponentDuplicateError(
-          f'Duplicate system component: {component.class_name}'
+          f'Duplicate system component: {component.class_name!r}'
         )
 
     elif isinstance(component, GameComponent):
       self.game_components_by_name[component.class_name].append(component)
     else:
       raise exceptions.ComponentNotFoundError(
-        f'Trying to add non existent component: {component}'
+        f'Trying to add non existent component: {component!r}'
       )
 
   def update(self) -> None:
@@ -65,7 +65,7 @@ class ComponentManager:  # Singleton
   def get_game_manager(self) -> 'GameManager':
     name = 'GameManager'
     if name.lower() not in self.system_components_by_name.keys():
-      raise exceptions.ComponentNotFoundError(f'Class name not found: {name}')
+      raise exceptions.ComponentNotFoundError(f'Class name not found: {name!r}')
 
     component = self.system_components_by_name[name.lower()]
     return component
@@ -73,7 +73,7 @@ class ComponentManager:  # Singleton
   def get_window(self) -> 'Window':
     name = 'Window'
     if name.lower() not in self.system_components_by_name.keys():
-      raise exceptions.ComponentNotFoundError(f'Class name not found: {name}')
+      raise exceptions.ComponentNotFoundError(f'Class name not found: {name!r}')
 
     component = self.system_components_by_name[name.lower()]
     return component
@@ -81,7 +81,7 @@ class ComponentManager:  # Singleton
   def get_input(self) -> 'Input':
     name = 'Input'
     if name.lower() not in self.system_components_by_name.keys():
-      raise exceptions.ComponentNotFoundError(f'Class name not found: {name}')
+      raise exceptions.ComponentNotFoundError(f'Class name not found: {name!r}')
 
     component = self.system_components_by_name[name.lower()]
     return component
@@ -95,8 +95,6 @@ class Component:
     self.class_name = self.__class__.__name__.lower()
     if add:
       self.components_manager.add_element(self)
-
-    # LOGGER.info(f"Setting up: {self.name}")
 
   def update(self) -> None:
     pass
@@ -119,7 +117,7 @@ class SystemComponent(Component):  # Singleton
     Component.__init__(self)
 
   def __repr__(self):
-    return f"System Component: '{self.__class__.__name__}()'"
+    return f'System Component: {self.__class__.__name__!r}'
 
 
 class GameComponent(Component):
@@ -127,4 +125,4 @@ class GameComponent(Component):
     Component.__init__(self)
 
   def __repr__(self) -> str:
-    return f"Game Component: '{self.__class__.__name__}()'"
+    return f'Game Component: {self.__class__.__name__!r}'
