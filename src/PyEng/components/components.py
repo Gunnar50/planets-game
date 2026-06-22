@@ -6,8 +6,8 @@ from src.shared.debug import Logger
 
 if TYPE_CHECKING:
   from src.Game.main.game_manager import GameManager
-  from src.PyEng.components.input import Input
-  from src.PyEng.components.window import Window
+  from src.PyEng.components.system.input import Input
+  from src.PyEng.components.system.window import Window
 
 
 class ComponentManager:  # Singleton
@@ -45,7 +45,7 @@ class ComponentManager:  # Singleton
         f'Trying to add non existent component: {component!r}'
       )
 
-  def update(self) -> None:
+  def system_update(self) -> None:
     for component in self.system_components_by_name.values():
       component.update()
 
@@ -123,6 +123,21 @@ class SystemComponent(Component):  # Singleton
 class GameComponent(Component):
   def __init__(self, add=True):
     Component.__init__(self)
+    # The GameObject this component is currently attached to.
+    # This is how components access data from sister components.
+    self.game_object = None
+
+  def start(self):
+    """Called once when the object is initialized."""
+    pass
+
+  def update(self, dt):
+    """Called every frame. Handles Logic (void Update())."""
+    pass
+
+  def draw(self, screen):
+    """Called by the rendering system. Handled in Python by components."""
+    pass
 
   def __repr__(self) -> str:
     return f'Game Component: {self.__class__.__name__!r}'

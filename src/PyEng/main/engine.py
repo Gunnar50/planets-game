@@ -1,7 +1,7 @@
 from src.PyEng.components.components import ComponentManager
-from src.PyEng.components.input import Input
-from src.PyEng.components.state_manager import StateManager
-from src.PyEng.components.window import Window
+from src.PyEng.components.system.input import Input
+from src.PyEng.components.system.state_manager import StateManager
+from src.PyEng.components.system.window import Window
 from src.PyEng.main.engine_config import EngineConfigs
 from src.PyEng.main.engine_files import EngineFiles
 from src.PyEng.utils.debugger import Debugger
@@ -33,7 +33,7 @@ class Engine:
     return cls.__instance
 
   def update(self) -> None:
-    self.components_manager.update()
+    self.components_manager.system_update()
 
   def render(self) -> None:
     raise NotImplementedError
@@ -64,14 +64,10 @@ class Engine:
     )
 
     # Set up keyboard and mouse inputs
-    if configs.is_editor:
-      self.input = Input(
-        EngineFiles.EDITOR_MAPPINGS, key_mappings.EditorMapping
-      )
-    else:
-      self.input = Input(EngineFiles.GAME_MAPPINGS, key_mappings.GameMapping)
+    self.input = Input(EngineFiles.GAME_MAPPINGS, key_mappings.GameMapping)
     self.state_manager = StateManager(
-      configs.default_state, configs.initial_state
+      configs.default_state,
+      configs.initial_state,
     )
     # self.timer = FrameTimer(configs.fps)
 
