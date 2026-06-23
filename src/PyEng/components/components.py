@@ -1,4 +1,3 @@
-from collections import defaultdict
 from typing import Any, TYPE_CHECKING
 
 from src.shared import exceptions
@@ -25,7 +24,6 @@ class ComponentManager:  # Singleton
 
   def __init__(self):
     self.system_components_by_name = {}
-    self.game_components_by_name = defaultdict(list)
 
   def add_element(self, component: 'Component') -> None:
     # Prevent duplicates of the system elements
@@ -37,9 +35,6 @@ class ComponentManager:  # Singleton
         raise exceptions.ComponentDuplicateError(
           f'Duplicate system component: {component.class_name!r}'
         )
-
-    elif isinstance(component, GameComponent):
-      self.game_components_by_name[component.class_name].append(component)
     else:
       raise exceptions.ComponentNotFoundError(
         f'Trying to add non existent component: {component!r}'
@@ -115,26 +110,3 @@ class SystemComponent(Component):  # Singleton
 
   def __repr__(self):
     return f'System Component: {self.__class__.__name__!r}'
-
-
-class GameComponent(Component):
-  def __init__(self, add=True):
-    Component.__init__(self)
-    # The GameObject this component is currently attached to.
-    # This is how components access data from sister components.
-    self.game_object = None
-
-  def start(self):
-    """Called once when the object is initialized."""
-    pass
-
-  def update(self, dt):
-    """Called every frame. Handles Logic."""
-    pass
-
-  def draw(self, screen):
-    """Called by the rendering system. Handled in Python by components."""
-    pass
-
-  def __repr__(self) -> str:
-    return f'Game Component: {self.__class__.__name__!r}'

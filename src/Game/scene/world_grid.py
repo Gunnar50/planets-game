@@ -3,17 +3,15 @@ import pathlib
 import pygame
 
 from src.Game.main.configs.build_config import BuildConfig
-from src.PyEng.components.components import GameComponent
 from src.PyEng.main.engine import Engine
 from src.shared import io
 from src.shared import serialisers
 
 
-class Scene(GameComponent):
+class Scene:
   WORLD_SIZE = 10
 
   def __init__(self) -> None:
-    GameComponent.__init__(self)
     self.window = Engine.get_instance().window
     self.world_grid = WorldGrid(self, Scene.WORLD_SIZE)
 
@@ -24,9 +22,8 @@ class Scene(GameComponent):
     self.world_grid.render(self.window.display)
 
 
-class WorldGrid(GameComponent, serialisers.Serialiser):
+class WorldGrid(serialisers.Serialiser):
   def __init__(self, scene: Scene, world_size: int) -> None:
-    GameComponent.__init__(self)
     self.scene = scene
     self.world_size = world_size
     game_manager_component = self.components_manager.get_game_manager()
