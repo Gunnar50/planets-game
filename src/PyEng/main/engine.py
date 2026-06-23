@@ -1,6 +1,6 @@
-from src.PyEng.components.components import SystemManager
 from src.PyEng.components.system.input import Input
 from src.PyEng.components.system.state_manager import StateManager
+from src.PyEng.components.system.system_manager import SystemManager
 from src.PyEng.components.system.window import Window
 from src.PyEng.main.engine_config import EngineConfigs
 from src.PyEng.main.engine_files import EngineFiles

@@ -1,6 +1,6 @@
 import pygame
 
-from src.PyEng.components.components import SystemComponent
+from src.PyEng.components.system.system_component import SystemComponent
 from src.shared import api
 from src.shared.types import Coordinate
 

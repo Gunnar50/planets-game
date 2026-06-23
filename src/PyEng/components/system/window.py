@@ -3,7 +3,7 @@ import time
 import pygame
 
 from src.Game.main.configs.build_config import BuildConfig
-from src.PyEng.components.components import SystemComponent
+from src.PyEng.components.system.system_component import SystemComponent
 
 
 class Window(SystemComponent):

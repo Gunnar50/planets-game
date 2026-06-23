@@ -2,7 +2,7 @@ from typing import Any
 
 import pygame
 
-from src.PyEng.components.components import SystemComponent
+from src.PyEng.components.system.system_component import SystemComponent
 
 
 class Debugger(SystemComponent):

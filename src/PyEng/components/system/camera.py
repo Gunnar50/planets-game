@@ -1,4 +1,4 @@
-from src.PyEng.components.components import SystemComponent
+from src.PyEng.components.system.system_component import SystemComponent
 
 
 class Camera(SystemComponent):

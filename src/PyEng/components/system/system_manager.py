@@ -6,10 +6,11 @@ from src.shared.debug import Logger
 if TYPE_CHECKING:
   from src.Game.main.game_manager import GameManager
   from src.PyEng.components.system.input import Input
+  from src.PyEng.components.system.system_component import SystemComponent
   from src.PyEng.components.system.window import Window
 
 
-class SystemManager:  # Singleton
+class SystemManager:
   """SystemManager
 
   This is a singleton component that handles all the system and game components
@@ -17,7 +18,7 @@ class SystemManager:  # Singleton
 
   __instance: 'SystemManager | None' = None
 
-  def __new__(cls, *args, **kwargs):
+  def __new__(cls, *args, **kwargs) -> 'SystemManager':
     if cls.__instance is None:
       cls.__instance = super().__new__(cls)
     return cls.__instance
@@ -27,17 +28,12 @@ class SystemManager:  # Singleton
 
   def add_element(self, component: 'SystemComponent') -> None:
     # Prevent duplicates of the system elements
-    if isinstance(component, SystemComponent):
-      if component.class_name not in self.system_components_by_name.keys():
-        Logger.info(f'Adding component: {component!r}')
-        self.system_components_by_name[component.class_name] = component
-      else:
-        raise exceptions.ComponentDuplicateError(
-          f'Duplicate system component: {component.class_name!r}'
-        )
+    if component.class_name not in self.system_components_by_name.keys():
+      Logger.info(f'Adding component: {component!r}')
+      self.system_components_by_name[component.class_name] = component
     else:
-      raise exceptions.ComponentNotFoundError(
-        f'Trying to add non existent component: {component!r}'
+      raise exceptions.ComponentDuplicateError(
+        f'Duplicate system component: {component.class_name!r}'
       )
 
   def update(self) -> None:
@@ -83,30 +79,3 @@ class SystemManager:  # Singleton
 
 
 system_manager = SystemManager()
-
-
-class SystemComponent:
-  """System components that are singletons.
-
-  Render, Camera, Inputs, Assets, etc.
-  """
-
-  __instance = None
-
-  def __new__(cls, *args, **kwargs):
-    if cls.__instance is None:
-      cls.__instance = super().__new__(cls)
-    return cls.__instance
-
-  def __init__(self, custom_id: int | None = None, add=True):
-    self.custom_id = custom_id
-    self.class_name = self.__class__.__name__.lower()
-    self.system_manager = system_manager
-    if add:
-      system_manager.add_element(self)
-
-  def update(self):
-    pass
-
-  def __repr__(self):
-    return f'System Component: {self.__class__.__name__!r}'
