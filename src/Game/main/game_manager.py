@@ -1,11 +1,19 @@
+from typing import TYPE_CHECKING
+
+import pygame
+
 from src.Game.main.configs.game_config import GameConfig
 from src.Game.main.game_state import GameState
 from src.Game.repository.game_database import BlueprintDatabase
-from src.PyEng.components.components import SystemComponent
+from src.PyEng.components.system.system_component import SystemComponent
 from src.PyEng.main.engine import Engine
+from src.shared.debug import Logger
+
+if TYPE_CHECKING:
+  from src.PyEng.components.game.game_object import GameObject
 
 
-class GameManager(SystemComponent):
+class OldGameManager(SystemComponent):
   configs: GameConfig
   engine: Engine
   blueprint_db: BlueprintDatabase
@@ -40,5 +48,44 @@ class GameManager(SystemComponent):
       pass
 
     # Update the current session which renders the world
-    self.engine.render()
+    # self.engine.render()
     # self.current_session.update()
+
+
+class Scene:
+  """A container for GameObjects representing a specific state/level."""
+
+  def __init__(self, name='BaseScene'):
+    self.name = name
+    self.game_objects: list[GameObject] = []
+
+  def add_object(self, game_object: 'GameObject') -> None:
+    self.game_objects.append(game_object)
+    game_object.start()
+
+  def update(self, delta_time: float) -> None:
+    for game_object in self.game_objects:
+      game_object.update(delta_time)
+
+  def render(self, display: pygame.Surface) -> None:
+    for game_object in self.game_objects:
+      game_object.draw(display)
+
+
+class GameManager:
+  """Manages scene transitions and holds the currently active scene."""
+
+  def __init__(self):
+    self.current_scene: Scene | None = None
+
+  def load_scene(self, scene: Scene) -> None:
+    Logger.info(f'[GameManager] Loading Scene: {scene.name}')
+    self.current_scene = scene
+
+  def update(self, dt: float) -> None:
+    if self.current_scene:
+      self.current_scene.update(dt)
+
+  def render(self, display: pygame.Surface) -> None:
+    if self.current_scene:
+      self.current_scene.render(display)

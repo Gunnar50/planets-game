@@ -1,5 +1,6 @@
 from src.Game.main.configs.build_config import BuildConfig
 from src.Game.main.game_manager import GameManager
+from src.Game.main.game_manager import Scene
 from src.PyEng.main.engine import Engine
 from src.shared import key_mappings
 
@@ -19,13 +20,17 @@ class EngineTester:
 class GameApp:
   def __init__(self) -> None:
     self.engine = Engine.create(BuildConfig)
-    self.game_manager = GameManager(self.engine)
-    self.input = self.game_manager.components_manager.get_input()
+    self.game_manager = GameManager()
+    scene = Scene()
+    self.game_manager.load_scene(scene)
+    self.input = self.engine.input
 
   def run(self) -> None:
     while True:
-      self.game_manager.update()
+      delta_time = self.engine.window.get_dt()
+      self.game_manager.update(delta_time)
       self.engine.update()
+      # self.engine.render()
 
       if self.input.pressed(key_mappings.GameMapping.DOWN):
         print('DOWN')

@@ -7,7 +7,7 @@ class Transform(BaseGameComponent):
   """Transform Component. MANDATORY on every GameObject."""
 
   def __init__(self, x=0, y=0, angle=0):
-    super().__init__()
+    BaseGameComponent.__init__(self)
     # Pygame uses vectors and Rects.
     # This component stores the essential STATE DATA (Position).
     self.position = pygame.Vector2(x, y)

@@ -1,6 +1,10 @@
 from typing import TYPE_CHECKING
 
+from src.PyEng.components.system.system_manager import system_manager
+
 if TYPE_CHECKING:
+  import pygame
+
   from src.PyEng.components.game.game_object import GameObject
 
 
@@ -15,15 +19,16 @@ class BaseGameComponent:
     # This is how components access data from sister components.
     self.game_object: GameObject | None = None
     self.enabled = True
+    self.system_components = system_manager
 
   def start(self):
     """Called once when the object is initialized."""
     pass
 
-  def update(self, dt):
+  def update(self, dt: float):
     """Called every frame. Handles Logic."""
     pass
 
-  def draw(self, screen):
+  def draw(self, display: pygame.Surface):
     """Called by the rendering system. Handled in Python by components."""
     pass

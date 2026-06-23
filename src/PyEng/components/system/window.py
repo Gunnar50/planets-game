@@ -56,21 +56,21 @@ class Window(SystemComponent):
   def get_height(self) -> int:
     return self.window_height
 
-  def get_dt(self):
+  def get_dt(self) -> float:
     dt = time.time() - self.previous_frame
     self.previous_frame = time.time()
     return dt
 
-  def update(self):
+  def update(self) -> None:
     self.clock.tick(self.fps)
     self.swap_buffers()
     self.clear()
 
-  def clear(self):
+  def clear(self) -> None:
     self.display.fill(self.background_colour)
     self.debug_display.fill((0, 0, 0, 0))
 
-  def swap_buffers(self):
+  def swap_buffers(self) -> None:
     scaled_display = pygame.transform.scale(
       self.display, self.screen.get_size()
     )
