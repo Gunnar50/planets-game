@@ -9,13 +9,13 @@ if TYPE_CHECKING:
   from src.PyEng.components.system.window import Window
 
 
-class ComponentManager:  # Singleton
-  """ComponentsManager
+class SystemManager:  # Singleton
+  """SystemManager
 
   This is a singleton component that handles all the system and game components
   """
 
-  __instance: 'ComponentManager | None' = None
+  __instance: 'SystemManager | None' = None
 
   def __new__(cls, *args, **kwargs):
     if cls.__instance is None:
@@ -25,7 +25,7 @@ class ComponentManager:  # Singleton
   def __init__(self):
     self.system_components_by_name = {}
 
-  def add_element(self, component: 'Component') -> None:
+  def add_element(self, component: 'SystemComponent') -> None:
     # Prevent duplicates of the system elements
     if isinstance(component, SystemComponent):
       if component.class_name not in self.system_components_by_name.keys():
@@ -40,7 +40,7 @@ class ComponentManager:  # Singleton
         f'Trying to add non existent component: {component!r}'
       )
 
-  def system_update(self) -> None:
+  def update(self) -> None:
     for component in self.system_components_by_name.values():
       component.update()
 
@@ -82,17 +82,10 @@ class ComponentManager:  # Singleton
     return component
 
 
-class Component:
-  components_manager = ComponentManager()
-
-  def __init__(self, custom_id: int | None = None, add=True):
-    self.custom_id = custom_id
-    self.class_name = self.__class__.__name__.lower()
-    if add:
-      self.components_manager.add_element(self)
+system_manager = SystemManager()
 
 
-class SystemComponent(Component):  # Singleton
+class SystemComponent:
   """System components that are singletons.
 
   Render, Camera, Inputs, Assets, etc.
@@ -105,8 +98,15 @@ class SystemComponent(Component):  # Singleton
       cls.__instance = super().__new__(cls)
     return cls.__instance
 
-  def __init__(self, add=True):
-    Component.__init__(self)
+  def __init__(self, custom_id: int | None = None, add=True):
+    self.custom_id = custom_id
+    self.class_name = self.__class__.__name__.lower()
+    self.system_manager = system_manager
+    if add:
+      system_manager.add_element(self)
+
+  def update(self):
+    pass
 
   def __repr__(self):
     return f'System Component: {self.__class__.__name__!r}'

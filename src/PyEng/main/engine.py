@@ -1,4 +1,4 @@
-from src.PyEng.components.components import ComponentManager
+from src.PyEng.components.components import SystemManager
 from src.PyEng.components.system.input import Input
 from src.PyEng.components.system.state_manager import StateManager
 from src.PyEng.components.system.window import Window
@@ -16,7 +16,7 @@ class Engine:
   def __init__(self, configs: type[EngineConfigs]):
     self.window: Window
     self.input: Input
-    self.components_manager = ComponentManager()
+    self.system_manager = SystemManager()
 
     self.check_assets_folder()
     self.create_engine_components(configs)
@@ -33,7 +33,7 @@ class Engine:
     return cls.__instance
 
   def update(self) -> None:
-    self.components_manager.system_update()
+    self.system_manager.update()
 
   def render(self) -> None:
     raise NotImplementedError

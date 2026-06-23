@@ -11,7 +11,7 @@ class Debugger(SystemComponent):
     self.debug: dict = {}
     self.debugging = debug
     self.font = pygame.font.SysFont('Consolas', 20)
-    self.window = self.components_manager.get_window()
+    self.window = self.system_manager.get_window()
 
   def render_info(self):
     for i, key in enumerate(self.debug):
