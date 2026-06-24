@@ -1,3 +1,5 @@
+import pygame
+
 from src.Game.content.prefabs.player import PlayerPrefab
 from src.PyEng.components.system.game_manager import Scene
 
@@ -8,8 +10,8 @@ class GameScene(Scene):
   Build the world here — spawn objects, load maps, configure camera.
   """
 
-  def __init__(self):
-    Scene.__init__(self, 'GameScene')
+  def __init__(self, display: pygame.Surface):
+    Scene.__init__(self, display, 'GameScene')
 
   def load(self):
     """Populate the scene with GameObjects."""

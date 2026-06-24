@@ -11,9 +11,10 @@ if TYPE_CHECKING:
 class Scene:
   """A container for GameObjects representing a specific state/level."""
 
-  def __init__(self, name='BaseScene'):
+  def __init__(self, display: pygame.Surface, name='BaseScene'):
     self.name = name
     self.game_objects: list[GameObject] = []
+    self.display = display
 
   def load(self) -> None:
     pass
@@ -26,9 +27,9 @@ class Scene:
     for game_object in self.game_objects:
       game_object.update(delta_time)
 
-  def render(self, display: pygame.Surface) -> None:
+  def render(self) -> None:
     for game_object in self.game_objects:
-      game_object.draw(display)
+      game_object.draw(self.display)
 
 
 class GameManager:
@@ -46,6 +47,6 @@ class GameManager:
     if self.current_scene:
       self.current_scene.update(dt)
 
-  def render(self, display: pygame.Surface) -> None:
+  def render(self) -> None:
     if self.current_scene:
-      self.current_scene.render(display)
+      self.current_scene.render()

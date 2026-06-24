@@ -20,19 +20,20 @@ class EngineTester:
 class GameApp:
   def __init__(self) -> None:
     self.engine = Engine.create(BuildConfig)
-    self.game_manager = GameManager()
-    scene = GameScene()
-
-    self.game_manager.load_scene(scene)
     self.input = self.engine.input
     self.window = self.engine.window
+
+    self.game_manager = GameManager()
+    scene = GameScene(self.window.display)
+
+    self.game_manager.load_scene(scene)
 
   def run(self) -> None:
     while True:
       delta_time = self.engine.window.get_dt()
       self.engine.update()
       self.game_manager.update(delta_time)
-      self.game_manager.render(self.window.display)
+      self.game_manager.render()
 
       if self.input.pressed(key_mappings.GameMapping.DOWN):
         print('DOWN')
