@@ -1,20 +1,22 @@
 import pygame
 
 from src.PyEng.components.game.game_component import BaseGameComponent
+from src.shared.types import Colour
 
 
-class ShapeRender(BaseGameComponent):
+class ShapeRenderer(BaseGameComponent):
   """Shaper rendering component."""
 
-  def __init__(self, color, size=(32, 32)):
+  def __init__(self, colour: Colour, width: int = 0, height: int = 0):
     BaseGameComponent.__init__(self)
-    self.color = color
-    self.size = size
-    self.surface = pygame.Surface(size)
-    self.surface.fill(color)
+    self.color = colour
+    self.size = (width, height)
+    self.surface = pygame.Surface(self.size)
+    self.surface.fill(colour)
 
-  def draw(self, display: pygame.Surface):
+  def draw(self, display: pygame.Surface) -> None:
     if not self.game_object:
+      # TODO: Create custom exception
       raise Exception
 
     # Renders the surface relative to the GameObject's transform position

@@ -19,6 +19,13 @@ class Prefab:
   """
 
   # Should have method to create prefab from a json file
+  def __init__(
+    self,
+    position: tuple[int, int] = (0, 0),
+    rotation=None,
+  ) -> None:
+    self.position = pygame.Vector2(position[0], position[1])
+    self.rotation = rotation
 
   def create(self, **kwargs) -> GameObject:
     """
@@ -26,36 +33,3 @@ class Prefab:
     kwargs can carry spawn position, overrides, variants, etc.
     """
     raise NotImplementedError
-
-  def instantiate(self, **kwargs) -> GameObject:
-    """Public entry point. Calls create() and returns the GameObject."""
-    return self.create(**kwargs)
-
-
-class PlayerPrefab(Prefab):
-  """
-  Reusable Player template. Mirrors a Unity Prefab asset.
-  Instantiate this anywhere to get a fully wired-up player.
-
-  Usage:
-      player = PlayerPrefab().instantiate(x=100, y=300)
-      scene.add_object(player)
-  """
-
-  # Should have create method to create prefab from a json file
-
-  def create(self, x=0, y=0, speed=200, health=100, **kwargs) -> GameObject:
-    obj = GameObject('Player')
-    obj.tag = 'Player'
-
-    # Transform is already added in GameObject.__init__
-    obj.transform.position = pygame.Vector2(x, y)
-
-    # Visual — swap ShapeRenderer for SpriteRenderer when you have art
-    obj.add_component(ShapeRenderer(color=(100, 180, 255), width=32, height=48))
-
-    # Behaviour scripts
-    obj.add_component(PlayerMovement(speed=speed))
-    obj.add_component(Health(max_health=health))
-
-    return obj

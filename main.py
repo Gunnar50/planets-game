@@ -1,6 +1,6 @@
 from src.Game.main.configs.build_config import BuildConfig
-from src.Game.main.game_manager import GameManager
-from src.Game.main.game_manager import Scene
+from src.Game.scene.game_scene import GameScene
+from src.PyEng.components.system.game_manager import GameManager
 from src.PyEng.main.engine import Engine
 from src.shared import key_mappings
 
@@ -21,16 +21,18 @@ class GameApp:
   def __init__(self) -> None:
     self.engine = Engine.create(BuildConfig)
     self.game_manager = GameManager()
-    scene = Scene()
+    scene = GameScene()
+
     self.game_manager.load_scene(scene)
     self.input = self.engine.input
+    self.window = self.engine.window
 
   def run(self) -> None:
     while True:
       delta_time = self.engine.window.get_dt()
-      self.game_manager.update(delta_time)
       self.engine.update()
-      # self.engine.render()
+      self.game_manager.update(delta_time)
+      self.game_manager.render(self.window.display)
 
       if self.input.pressed(key_mappings.GameMapping.DOWN):
         print('DOWN')

@@ -1,10 +1,10 @@
 from typing import TYPE_CHECKING
 
+import pygame
+
 from src.PyEng.components.system.system_manager import system_manager
 
 if TYPE_CHECKING:
-  import pygame
-
   from src.PyEng.components.game.game_object import GameObject
 
 
@@ -23,7 +23,11 @@ class BaseGameComponent:
 
   def start(self):
     """Called once when the object is initialized."""
-    pass
+    if self.game_object is None:
+      # TODO
+      raise Exception
+
+    self._transform = self.game_object.transform
 
   def update(self, dt: float):
     """Called every frame. Handles Logic."""
