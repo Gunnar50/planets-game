@@ -1,6 +1,6 @@
 import pygame
 
-from src.PyEng.components.game.builtin.shape_render import ShapeRenderer
+from src.PyEng.components.game.builtin.shape_render import Renderer
 from src.PyEng.components.game.builtin.transform import Transform
 from src.PyEng.components.game.game_component import BaseGameComponent
 from src.shared.debug import Logger
@@ -18,6 +18,7 @@ class GameObject:
     self.tag: str | None = None
     self.is_active = True  # GameObject active flag
     self.transform = Transform()  # MANDATORY composition.
+    self.renderer: Renderer | None = None
 
     # A simple list/dict holding all attached components.
     self._components: dict[type[BaseGameComponent], BaseGameComponent] = {}
@@ -30,6 +31,15 @@ class GameObject:
     Equivalent to Unity's gameObject.AddComponent<T>().
     Sets the self-reference back to this GameObject container.
     """
+    if isinstance(component, Renderer):
+      if self.renderer is None:
+        self.renderer = component
+      else:
+        Logger.warning(
+          f'[{self.name}] already has a Renderer! You must remove the first renderer before adding a new one! Skipping...'
+        )
+        return
+
     # Simplified key lookup based on class type
     comp_type = type(component)
     self._components[comp_type] = component
@@ -70,8 +80,5 @@ class GameObject:
 
   def draw(self, display: pygame.Surface) -> None:
     """Render routine for visual components (like SpriteRenderer)."""
-    if self.is_active:
-      # TODO: Check if the object has any Renderer component
-      if renderer := self.get_component(ShapeRenderer):
-        # Render using the object's transform location
-        renderer.draw(display)
+    if self.is_active and self.renderer:
+      self.renderer.draw(display)

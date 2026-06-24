@@ -17,6 +17,3 @@ class Transform(BaseGameComponent):
   def translate(self, dx: float, dy: float):
     """Move by an offset."""
     self.position += pygame.Vector2(dx, dy)
-
-  def start(self):
-    print(f'Transform initialized at: {self.position}')

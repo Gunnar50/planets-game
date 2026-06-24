@@ -1,5 +1,5 @@
 from src.Game.content.custom.player_movement import PlayerMovement
-from src.PyEng.components.game.builtin.shape_render import ShapeRenderer
+from src.PyEng.components.game.builtin.shape_render import SquareRenderer
 from src.PyEng.components.game.game_object import GameObject
 from src.PyEng.components.game.prefab import Prefab
 
@@ -26,10 +26,10 @@ class PlayerPrefab(Prefab):
 
     # Visual — swap ShapeRenderer for SpriteRenderer when you have art
     obj.add_component(
-      ShapeRenderer(
+      SquareRenderer(
         colour=(100, 180, 255),
         width=32,
-        height=48,
+        height=32,
       )
     )
 
