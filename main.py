@@ -1,8 +1,13 @@
+import pygame
+
 from src.Game.main.configs.build_config import BuildConfig
 from src.Game.scene.game_scene import GameScene
 from src.PyEng.components.system.game_manager import GameManager
 from src.PyEng.main.engine import Engine
 from src.shared import key_mappings
+
+if not pygame.IS_CE:
+  raise Exception('Not running Pygame-CE')
 
 
 class EngineTester:
