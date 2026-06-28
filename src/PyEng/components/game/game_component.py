@@ -27,7 +27,7 @@ class BaseGameComponent:
       # TODO
       raise Exception
 
-    self._transform = self.game_object.transform
+    self.transform = self.game_object.transform
 
   def update(self, dt: float):
     """Called every frame. Handles Logic."""

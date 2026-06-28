@@ -1,7 +1,11 @@
+from collections.abc import Callable
+
 import pygame
 
 from src.PyEng.components.game.game_component import BaseGameComponent
 from src.shared.types import Colour
+
+BlitType = Callable[..., pygame.Rect]
 
 
 class Renderer(BaseGameComponent):
@@ -10,8 +14,32 @@ class Renderer(BaseGameComponent):
   SpriteRenderer, ShapeRenderer, etc. all extend this.
   """
 
+  def __init__(self, sorting_layer: int = 0, order_in_layer: int = 0):
+    BaseGameComponent.__init__(self)
+    self.position: pygame.Vector2
+    self.sorting_layer = sorting_layer
+    self.order_in_layer = order_in_layer
+
+  def start(self):
+    super().start()
+
+    # Initialise position
+    self.position = self.transform.position
+
+    # Register to the RenderSystem
+    self.system_components.get_render().register(self)
+
+  @property
+  def sorting_key(self) -> tuple:
+    # Sort by layer first, then order in layer, then y position for 2d top view
+    return (self.sorting_layer, self.order_in_layer, self.transform.position.y)
+
+  @property
+  def bounds(self) -> pygame.Rect:
+    """Returns the bounding box of this renderer in world space."""
+    raise NotImplementedError
+
   def draw(self, display: pygame.Surface) -> None:
-    """Override to draw this object to the screen."""
     raise NotImplementedError
 
 
@@ -24,17 +52,22 @@ class SquareRenderer(Renderer):
     self.width = width
     self.height = height
 
+  @property
+  def bounds(self) -> pygame.Rect:
+    # Returns a Rect corresponding to the square's position and size
+    return pygame.Rect(
+      self.position.x,
+      self.position.y,
+      self.width,
+      self.height,
+    )
+
   def draw(self, display: pygame.Surface) -> None:
     # Renders the surface relative to the GameObject's transform position
     pygame.draw.rect(
       display,
       self.colour,
-      (
-        self._transform.position.x,
-        self._transform.position.y,
-        self.width,
-        self.height,
-      ),
+      self.bounds,
     )
 
 
@@ -45,15 +78,43 @@ class CircleRenderer(Renderer):
     Renderer.__init__(self)
     self.colour = colour
     self.radius = radius
+    self.diameter = radius * 2
+
+  @property
+  def bounds(self) -> pygame.Rect:
+    # A circle's bounding box width and height is its diameter (radius * 2)
+    # Bounding box top-left needs to be shifted back by the radius
+    return pygame.Rect(
+      self.position.x - self.radius,
+      self.position.y - self.radius,
+      self.diameter,
+      self.diameter,
+    )
 
   def draw(self, display: pygame.Surface) -> None:
     # Renders the surface relative to the GameObject's transform position
     pygame.draw.circle(
       display,
       self.colour,
-      (
-        self._transform.position.x,
-        self._transform.position.y,
-      ),
+      (self.position.x, self.position.y),
       self.radius,
     )
+
+
+class RenderableSprite:
+  def __init__(self, image, x, y, layer=0, order_in_layer=0):
+    self.image = image
+    self.rect = self.image.get_rect(topleft=(x, y))
+
+    # Unity-like sorting properties
+    self.layer = layer
+    self.order_in_layer = order_in_layer
+
+    # Cache the sorting key to avoid recalculating it constantly
+    self.sorting_key = (self.layer, self.order_in_layer, self.rect.bottom)
+
+  def update_position(self, dx, dy):
+    self.rect.x += dx
+    self.rect.y += dy
+    # If Y-position matters for depth (like a top-down game), update the key
+    self.sorting_key = (self.layer, self.order_in_layer, self.rect.bottom)

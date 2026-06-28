@@ -4,8 +4,9 @@ from src.shared import exceptions
 from src.shared.debug import Logger
 
 if TYPE_CHECKING:
-  from src.Game.main.game_manager import GameManager
+  from src.PyEng.components.system.game_manager import GameManager
   from src.PyEng.components.system.input import Input
+  from src.PyEng.components.system.render import RenderSystem
   from src.PyEng.components.system.system_component import SystemComponent
   from src.PyEng.components.system.window import Window
 
@@ -70,12 +71,10 @@ class SystemManager:
     return component
 
   def get_input(self) -> 'Input':
-    name = 'Input'
-    if name.lower() not in self.system_components_by_name.keys():
-      raise exceptions.ComponentNotFoundError(f'Class name not found: {name!r}')
+    return self.system_components_by_name['input']
 
-    component = self.system_components_by_name[name.lower()]
-    return component
+  def get_render(self) -> 'RenderSystem':
+    return self.system_components_by_name['rendersystem']
 
 
 system_manager = SystemManager()

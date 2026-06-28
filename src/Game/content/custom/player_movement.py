@@ -37,4 +37,4 @@ class PlayerMovement(BaseGameComponent):
     if vec.length() > 0:
       vec = vec.normalize()
 
-    self._transform.translate(vec.x * self.speed * dt, vec.y * self.speed * dt)
+    self.transform.translate(vec.x * self.speed * dt, vec.y * self.speed * dt)

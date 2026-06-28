@@ -38,7 +38,7 @@ class GameApp:
       delta_time = self.engine.window.get_dt()
       self.engine.update()
       self.game_manager.update(delta_time)
-      self.game_manager.render()
+      self.engine.render()
 
       if self.input.pressed(key_mappings.GameMapping.DOWN):
         print('DOWN')

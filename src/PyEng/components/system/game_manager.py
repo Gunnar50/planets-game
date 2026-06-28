@@ -27,10 +27,6 @@ class Scene:
     for game_object in self.game_objects:
       game_object.update(delta_time)
 
-  def render(self) -> None:
-    for game_object in self.game_objects:
-      game_object.draw(self.display)
-
 
 class GameManager:
   """Manages scene transitions and holds the currently active scene."""
@@ -46,7 +42,3 @@ class GameManager:
   def update(self, dt: float) -> None:
     if self.current_scene:
       self.current_scene.update(dt)
-
-  def render(self) -> None:
-    if self.current_scene:
-      self.current_scene.render()

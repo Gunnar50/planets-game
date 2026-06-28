@@ -1,4 +1,5 @@
 from src.PyEng.components.system.input import Input
+from src.PyEng.components.system.render import RenderSystem
 from src.PyEng.components.system.state_manager import StateManager
 from src.PyEng.components.system.system_manager import SystemManager
 from src.PyEng.components.system.window import Window
@@ -16,6 +17,7 @@ class Engine:
   def __init__(self, configs: type[EngineConfigs]):
     self.window: Window
     self.input: Input
+    self.render_system: RenderSystem
     self.system_manager = SystemManager()
 
     self.check_assets_folder()
@@ -36,8 +38,7 @@ class Engine:
     self.system_manager.update()
 
   def render(self) -> None:
-    raise NotImplementedError
-    # self.renderer.render()
+    self.render_system.render(self.window.display)
 
   def check_assets_folder(self):
     if not EngineFiles.DATA_FOLDER.exists():
@@ -62,6 +63,9 @@ class Engine:
       vsync=configs.vsync,
       background_colour=configs.background_colour,
     )
+
+    # Create render system
+    self.render_system = RenderSystem()
 
     # Set up keyboard and mouse inputs
     self.input = Input(EngineFiles.GAME_MAPPINGS, key_mappings.GameMapping)
