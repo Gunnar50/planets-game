@@ -19,7 +19,7 @@ class Scene:
     pass
 
   def render(self):
-    self.world_grid.render(self.window.display)
+    self.world_grid.render(self.window.game_display)
 
 
 class WorldGrid(serialisers.Serialiser):

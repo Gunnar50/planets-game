@@ -29,7 +29,7 @@ class GameApp:
     self.window = self.engine.window
 
     self.game_manager = GameManager()
-    scene = GameScene(self.window.display)
+    scene = GameScene()
 
     self.game_manager.load_scene(scene)
 

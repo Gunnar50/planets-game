@@ -1,6 +1,7 @@
 import pygame
 
 from src.Game.main.configs.game_config import GameConfig
+from src.Game.main.game_state import RenderGroup
 from src.PyEng.components.game.game_component import BaseGameComponent
 from src.shared.types import Colour
 from src.shared.types import SortingKey
@@ -12,9 +13,15 @@ class Renderer(BaseGameComponent):
   SpriteRenderer, ShapeRenderer, etc. all extend this.
   """
 
-  def __init__(self, sorting_layer: int = 0, order_in_layer: int = 0):
+  def __init__(
+    self,
+    render_group: RenderGroup = RenderGroup.GAME,
+    sorting_layer: int = 0,
+    order_in_layer: int = 0,
+  ):
     BaseGameComponent.__init__(self)
     self.position: pygame.Vector2
+    self.render_group = render_group
     self.sorting_layer = sorting_layer
     self.order_in_layer = order_in_layer
 
@@ -31,7 +38,7 @@ class Renderer(BaseGameComponent):
     self.position = self.transform.position
 
     # Register to the RenderSystem
-    self.system_components.get_render().register(self)
+    self.system_components.get_render().register(self.render_group, self)
 
   def _get_y_sort_key(self) -> SortingKey:
     return (
@@ -54,8 +61,17 @@ class Renderer(BaseGameComponent):
 class SquareRenderer(Renderer):
   """Shaper rendering component."""
 
-  def __init__(self, colour: Colour, width: int = 0, height: int = 0):
-    Renderer.__init__(self)
+  def __init__(
+    self,
+    *,
+    colour: Colour,
+    width: int = 0,
+    height: int = 0,
+    render_group: RenderGroup = RenderGroup.GAME,
+    sorting_layer: int = 0,
+    order_in_layer: int = 0,
+  ):
+    Renderer.__init__(self, render_group, sorting_layer, order_in_layer)
     self.colour = colour
     self.width = width
     self.height = height
@@ -81,8 +97,16 @@ class SquareRenderer(Renderer):
 class CircleRenderer(Renderer):
   """Circle rendering component."""
 
-  def __init__(self, colour: Colour, radius: float = 0):
-    Renderer.__init__(self)
+  def __init__(
+    self,
+    *,
+    colour: Colour,
+    radius: float = 0,
+    render_group: RenderGroup = RenderGroup.GAME,
+    sorting_layer: int = 0,
+    order_in_layer: int = 0,
+  ):
+    Renderer.__init__(self, render_group, sorting_layer, order_in_layer)
     self.colour = colour
     self.radius = radius
     self.diameter = radius * 2

@@ -1,7 +1,5 @@
 from typing import TYPE_CHECKING
 
-import pygame
-
 from src.shared.debug import Logger
 
 if TYPE_CHECKING:
@@ -11,10 +9,9 @@ if TYPE_CHECKING:
 class Scene:
   """A container for GameObjects representing a specific state/level."""
 
-  def __init__(self, display: pygame.Surface, name='BaseScene'):
+  def __init__(self, name='BaseScene'):
     self.name = name
     self.game_objects: list[GameObject] = []
-    self.display = display
 
   def load(self) -> None:
     pass

@@ -19,3 +19,10 @@ class GameState(State, enum.Enum, metaclass=EnumABCMeta):
   UI_FOCUS = 'ui_focus'
   MAIN_MENU = 'main_menu'
   INITIAL = 'initial'
+
+
+class RenderGroup(str, enum.Enum):
+  GAME = 'game'
+  DEBUG = 'debug'
+  UI = 'ui'
+  HUD = 'hud'

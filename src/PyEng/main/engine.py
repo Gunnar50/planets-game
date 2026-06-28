@@ -38,7 +38,7 @@ class Engine:
     self.system_manager.update()
 
   def render(self) -> None:
-    self.render_system.render(self.window.display)
+    self.render_system.render(self.window.display_map)
 
   def check_assets_folder(self):
     if not EngineFiles.DATA_FOLDER.exists():

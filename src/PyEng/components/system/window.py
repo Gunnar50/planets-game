@@ -3,6 +3,7 @@ import time
 import pygame
 
 from src.Game.main.configs.build_config import BuildConfig
+from src.Game.main.game_state import RenderGroup
 from src.PyEng.components.system.system_component import SystemComponent
 
 
@@ -34,18 +35,27 @@ class Window(SystemComponent):
     self.window_height = window_height
     self.start_time = time.time()
 
+    # Main surface where all other surfaces gets blit to
     self.screen = pygame.display.set_mode(
       size=(window_width, window_height), flags=fullscreen, vsync=vsync
     )
-    self.display = pygame.Surface(
+    self.blit_func = self.screen.blit
+    # Game display
+    self.game_display = pygame.Surface(
       (
         window_width // BuildConfig.scale_factor,
         window_height // BuildConfig.scale_factor,
       )
     ).convert_alpha()
+
+    # Debug display
     self.debug_display = pygame.Surface(
       (window_width, window_height)
     ).convert_alpha()
+    self.display_map = {
+      RenderGroup.GAME: self.game_display,
+      RenderGroup.DEBUG: self.debug_display,
+    }
 
     pygame.display.set_caption(caption)
     self.clock = pygame.time.Clock()
@@ -74,13 +84,13 @@ class Window(SystemComponent):
     self.clear()
 
   def clear(self) -> None:
-    self.display.fill(self.background_colour)
+    self.game_display.fill(self.background_colour)
     self.debug_display.fill((0, 0, 0, 0))
 
   def swap_buffers(self) -> None:
     scaled_display = pygame.transform.scale(
-      self.display, self.screen.get_size()
+      self.game_display, self.screen.get_size()
     )
-    self.screen.blit(scaled_display, (0, 0))
-    self.screen.blit(self.debug_display, (0, 0))
+    self.blit_func(scaled_display, (0, 0))
+    self.blit_func(self.debug_display, (0, 0))
     pygame.display.flip()
