@@ -3,3 +3,4 @@ from collections.abc import Sequence
 Coordinate = tuple[float, float] | Sequence[float]
 RGBAOutput = tuple[int, int, int, int]
 Colour = tuple[int, int, int]
+SortingKey = tuple[int, int, float]

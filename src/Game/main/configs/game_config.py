@@ -12,3 +12,5 @@ class GameConfig(EngineConfigs):
   session_creator = NotImplemented
   initial_state = GameState.INITIAL
   in_game_state = GameState.IN_GAME
+  # Sorting by Y axis is used mostly for top down games
+  sort_by_y_axis = False

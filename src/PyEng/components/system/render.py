@@ -24,12 +24,12 @@ class RenderSystem(SystemComponent):
     screen_rect = display.get_rect()
 
     render_queue = [
-      (render.sorting_key, render)
+      (render.sorting_key(), render)
       for render in self._renderers
       if render.enabled
       and render.game_object
       and render.game_object.is_active
-      and screen_rect.colliderect(render.bounds)
+      and screen_rect.colliderect(render.bounds())
     ]
     render_queue.sort()
 

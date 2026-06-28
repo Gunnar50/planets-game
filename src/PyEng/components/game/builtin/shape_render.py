@@ -1,11 +1,9 @@
-from collections.abc import Callable
-
 import pygame
 
+from src.Game.main.configs.game_config import GameConfig
 from src.PyEng.components.game.game_component import BaseGameComponent
 from src.shared.types import Colour
-
-BlitType = Callable[..., pygame.Rect]
+from src.shared.types import SortingKey
 
 
 class Renderer(BaseGameComponent):
@@ -20,7 +18,13 @@ class Renderer(BaseGameComponent):
     self.sorting_layer = sorting_layer
     self.order_in_layer = order_in_layer
 
-  def start(self):
+    # Sort by layer first, then order in layer, then y position for 2d top view
+    if GameConfig.sort_by_y_axis:
+      self.sorting_key = self._get_y_sort_key
+    else:
+      self.sorting_key = self._get_flat_sort_key
+
+  def start(self) -> None:
     super().start()
 
     # Initialise position
@@ -29,12 +33,16 @@ class Renderer(BaseGameComponent):
     # Register to the RenderSystem
     self.system_components.get_render().register(self)
 
-  @property
-  def sorting_key(self) -> tuple:
-    # Sort by layer first, then order in layer, then y position for 2d top view
-    return (self.sorting_layer, self.order_in_layer, self.transform.position.y)
+  def _get_y_sort_key(self) -> SortingKey:
+    return (
+      self.sorting_layer,
+      self.order_in_layer,
+      self.transform.position.y,
+    )
 
-  @property
+  def _get_flat_sort_key(self) -> SortingKey:
+    return (self.sorting_layer, self.order_in_layer, 0)
+
   def bounds(self) -> pygame.Rect:
     """Returns the bounding box of this renderer in world space."""
     raise NotImplementedError
@@ -52,7 +60,6 @@ class SquareRenderer(Renderer):
     self.width = width
     self.height = height
 
-  @property
   def bounds(self) -> pygame.Rect:
     # Returns a Rect corresponding to the square's position and size
     return pygame.Rect(
@@ -67,7 +74,7 @@ class SquareRenderer(Renderer):
     pygame.draw.rect(
       display,
       self.colour,
-      self.bounds,
+      self.bounds(),
     )
 
 
@@ -80,7 +87,6 @@ class CircleRenderer(Renderer):
     self.radius = radius
     self.diameter = radius * 2
 
-  @property
   def bounds(self) -> pygame.Rect:
     # A circle's bounding box width and height is its diameter (radius * 2)
     # Bounding box top-left needs to be shifted back by the radius
@@ -102,6 +108,7 @@ class CircleRenderer(Renderer):
 
 
 class RenderableSprite:
+  # TODO
   def __init__(self, image, x, y, layer=0, order_in_layer=0):
     self.image = image
     self.rect = self.image.get_rect(topleft=(x, y))
