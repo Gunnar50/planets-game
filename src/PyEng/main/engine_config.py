@@ -7,7 +7,7 @@ class EngineConfigs:
   ui_size = 1.0
   fullscreen = 0
   title = 'The Game'
-  fps = 100
+  fps = 60
   vsync = False
   background_colour = (100, 100, 100)
 

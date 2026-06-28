@@ -13,7 +13,7 @@ class Debugger(SystemComponent):
     self.font = pygame.font.SysFont('Consolas', 20)
     self.window = self.system_manager.get_window()
 
-  def render_info(self):
+  def render_info(self) -> None:
     for i, key in enumerate(self.debug):
       text = self.font.render(
         f'{key}:{self.debug[key]}', True, (255, 255, 255), (0, 0, 0)
@@ -23,13 +23,12 @@ class Debugger(SystemComponent):
       text_rect.y = 20 * i
       self.window.debug_display.blit(text, text_rect)
 
-  def add_info(self, key: str, info: Any):
+  def add_info(self, key: str, info: Any) -> None:
     self.debug[key] = info
 
-  def register_info(self):
-    self.add_info('FPS', self.window.fps)
-    # self.add_info('DT', self.window.get_dt())
+  def register_info(self) -> None:
+    self.add_info('FPS', int(self.window.get_fps()))
 
-  def update(self):
+  def update(self) -> None:
     self.register_info()
     self.render_info()

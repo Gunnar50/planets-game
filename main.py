@@ -35,7 +35,7 @@ class GameApp:
 
   def run(self) -> None:
     while True:
-      delta_time = self.engine.window.get_dt()
+      delta_time = self.engine.window.delta_time
       self.engine.update()
       self.game_manager.update(delta_time)
       self.engine.render()

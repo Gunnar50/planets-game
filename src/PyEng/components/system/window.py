@@ -26,7 +26,9 @@ class Window(SystemComponent):
   ):
     SystemComponent.__init__(self)
     pygame.init()
-    self.fps = fps
+    self.delta_time = 0.0
+    self.fps_cap = fps
+    self.frame_log: list[float] = []
     self.background_colour = background_colour
     self.window_width = window_width
     self.window_height = window_height
@@ -50,19 +52,24 @@ class Window(SystemComponent):
 
     self.previous_frame = time.time()
 
+  def get_fps(self) -> float:
+    return len(self.frame_log) / sum(self.frame_log)
+
   def get_width(self) -> int:
     return self.window_width
 
   def get_height(self) -> int:
     return self.window_height
 
-  def get_dt(self) -> float:
-    dt = time.time() - self.previous_frame
-    self.previous_frame = time.time()
-    return dt
-
   def update(self) -> None:
-    self.clock.tick(self.fps)
+    self.clock.tick(self.fps_cap)
+
+    # Calculate delta time
+    self.delta_time = time.time() - self.previous_frame
+    self.previous_frame = time.time()
+    self.frame_log.append(self.delta_time)
+    self.frame_log[-self.fps_cap :]
+
     self.swap_buffers()
     self.clear()
 
