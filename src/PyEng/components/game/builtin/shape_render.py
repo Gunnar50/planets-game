@@ -15,14 +15,14 @@ class Renderer(BaseGameComponent):
 
   def __init__(
     self,
-    render_group: RenderGroup = RenderGroup.GAME,
-    sorting_layer: int = 0,
+    layer: int = 0,
     order_in_layer: int = 0,
+    render_group: RenderGroup = RenderGroup.GAME,
   ):
     BaseGameComponent.__init__(self)
     self.position: pygame.Vector2
     self.render_group = render_group
-    self.sorting_layer = sorting_layer
+    self.sorting_layer = layer
     self.order_in_layer = order_in_layer
 
     # Sort by layer first, then order in layer, then y position for 2d top view
@@ -67,11 +67,11 @@ class SquareRenderer(Renderer):
     colour: Colour,
     width: int = 0,
     height: int = 0,
-    render_group: RenderGroup = RenderGroup.GAME,
-    sorting_layer: int = 0,
+    layer: int = 0,
     order_in_layer: int = 0,
+    render_group: RenderGroup = RenderGroup.GAME,
   ):
-    Renderer.__init__(self, render_group, sorting_layer, order_in_layer)
+    Renderer.__init__(self, layer, order_in_layer, render_group)
     self.colour = colour
     self.width = width
     self.height = height
@@ -102,11 +102,11 @@ class CircleRenderer(Renderer):
     *,
     colour: Colour,
     radius: float = 0,
-    render_group: RenderGroup = RenderGroup.GAME,
-    sorting_layer: int = 0,
+    layer: int = 0,
     order_in_layer: int = 0,
+    render_group: RenderGroup = RenderGroup.GAME,
   ):
-    Renderer.__init__(self, render_group, sorting_layer, order_in_layer)
+    Renderer.__init__(self, layer, order_in_layer, render_group)
     self.colour = colour
     self.radius = radius
     self.diameter = radius * 2
