@@ -15,7 +15,7 @@ class GameScene(Scene):
     """Populate the scene with GameObjects."""
 
     # Spawn player via prefab
-    player = PlayerPrefab(position=(100, 300)).create()
+    player = PlayerPrefab(position=(100, 100)).create()
     self.add_object(player)
 
     # Spawn some enemies

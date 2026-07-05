@@ -1,3 +1,4 @@
+from src.PyEng.components.system.assets_manager import AssetsManager
 from src.PyEng.components.system.input import Input
 from src.PyEng.components.system.render import RenderSystem
 from src.PyEng.components.system.state_manager import StateManager
@@ -66,6 +67,7 @@ class Engine:
 
     # Create render system
     self.render_system = RenderSystem()
+    self.assets_manager = AssetsManager()
 
     # Set up keyboard and mouse inputs
     self.input = Input(EngineFiles.GAME_MAPPINGS, key_mappings.GameMapping)

@@ -14,4 +14,4 @@ class BuildConfig(GameConfig):
   map_height = 10
   tile_width = 16
   tile_height = 16
-  scale_factor = 2
+  scale_factor = 5

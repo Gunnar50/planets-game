@@ -1,6 +1,6 @@
 from src.Game.content.custom.player_movement import PlayerMovement
 from src.Game.main.game_state import RenderGroup
-from src.PyEng.components.game.builtin.shape_render import SquareRenderer
+from src.PyEng.components.game.builtin.shape_render import SpriteRenderer
 from src.PyEng.components.game.game_object import GameObject
 from src.PyEng.components.game.prefab import Prefab
 
@@ -25,13 +25,11 @@ class PlayerPrefab(Prefab):
     obj.transform.position = self.position
     # TODO: Add rotation
 
-    # Visual — swap ShapeRenderer for SpriteRenderer when you have art
+    # Visual
     obj.add_component(
-      SquareRenderer(
+      SpriteRenderer(
+        image_name='player',
         render_group=RenderGroup.GAME,
-        colour=(100, 180, 255),
-        width=32,
-        height=32,
       )
     )
 

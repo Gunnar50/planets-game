@@ -20,6 +20,7 @@ class BaseGameComponent:
     self.game_object: GameObject | None = None
     self.enabled = True
     self.system_components = system_manager
+    self.assets_manager = self.system_components.get_assets_manager()
 
   def start(self):
     """Called once when the object is initialized."""

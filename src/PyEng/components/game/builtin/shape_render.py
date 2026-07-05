@@ -131,21 +131,27 @@ class CircleRenderer(Renderer):
     )
 
 
-class RenderableSprite:
-  # TODO
-  def __init__(self, image, x, y, layer=0, order_in_layer=0):
-    self.image = image
-    self.rect = self.image.get_rect(topleft=(x, y))
+class SpriteRenderer(Renderer):
+  def __init__(
+    self,
+    image_name: str,
+    layer: int = 0,
+    order_in_layer: int = 0,
+    render_group: RenderGroup = RenderGroup.GAME,
+  ):
+    Renderer.__init__(self, layer, order_in_layer, render_group)
+    self.image = self.assets_manager.load_image(image_name)
+    self.width = self.image.get_width()
+    self.height = self.image.get_height()
 
-    # Unity-like sorting properties
-    self.layer = layer
-    self.order_in_layer = order_in_layer
+  def bounds(self) -> pygame.Rect:
+    # Returns a Rect corresponding to the square's position and size
+    return pygame.Rect(
+      self.position.x,
+      self.position.y,
+      self.width,
+      self.height,
+    )
 
-    # Cache the sorting key to avoid recalculating it constantly
-    self.sorting_key = (self.layer, self.order_in_layer, self.rect.bottom)
-
-  def update_position(self, dx, dy):
-    self.rect.x += dx
-    self.rect.y += dy
-    # If Y-position matters for depth (like a top-down game), update the key
-    self.sorting_key = (self.layer, self.order_in_layer, self.rect.bottom)
+  def draw(self, display: pygame.Surface) -> None:
+    display.blit(self.image, self.bounds())

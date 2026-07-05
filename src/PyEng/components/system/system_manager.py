@@ -4,6 +4,7 @@ from src.shared import exceptions
 from src.shared.debug import Logger
 
 if TYPE_CHECKING:
+  from src.PyEng.components.system.assets_manager import AssetsManager
   from src.PyEng.components.system.game_manager import GameManager
   from src.PyEng.components.system.input import Input
   from src.PyEng.components.system.render import RenderSystem
@@ -75,6 +76,9 @@ class SystemManager:
 
   def get_render(self) -> 'RenderSystem':
     return self.system_components_by_name['rendersystem']
+
+  def get_assets_manager(self) -> 'AssetsManager':
+    return self.system_components_by_name['assetsmanager']
 
 
 system_manager = SystemManager()
