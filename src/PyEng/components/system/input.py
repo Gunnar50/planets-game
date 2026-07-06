@@ -6,9 +6,9 @@ import pygame
 
 from src.Game.main.configs.build_config import BuildConfig
 from src.PyEng.components.system.system_component import SystemComponent
-from src.shared import api
-from src.shared import io
-from src.shared import key_mappings
+from src.PyEng.utils import api
+from src.PyEng.utils import io
+from src.PyEng.utils import key_mappings
 
 
 class InputState:

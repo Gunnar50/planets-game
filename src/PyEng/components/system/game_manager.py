@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from src.shared.debug import Logger
+from src.PyEng.utils.logger import Logger
 
 if TYPE_CHECKING:
   from src.PyEng.components.game.game_object import GameObject

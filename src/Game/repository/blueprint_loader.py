@@ -7,9 +7,9 @@ from src.Game.repository.game_components import EntityBlueprint
 from src.Game.repository.game_components import ItemBlueprint
 from src.Game.repository.game_components import TileBlueprint
 from src.Game.repository.game_files import GameFiles
-from src.shared import exceptions
-from src.shared import io
-from src.shared.hash_registry import HashRegistry
+from src.PyEng.utils import exceptions
+from src.PyEng.utils import io
+from src.PyEng.utils.hash_registry import HashRegistry
 
 
 @dataclasses.dataclass

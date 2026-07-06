@@ -3,7 +3,7 @@ import pygame
 from src.PyEng.components.game.builtin.shape_render import Renderer
 from src.PyEng.components.game.builtin.transform import Transform
 from src.PyEng.components.game.game_component import BaseGameComponent
-from src.shared.debug import Logger
+from src.PyEng.utils.logger import Logger
 
 
 class GameObject:

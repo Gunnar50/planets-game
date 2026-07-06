@@ -6,10 +6,10 @@ from src.PyEng.components.system.system_manager import SystemManager
 from src.PyEng.components.system.window import Window
 from src.PyEng.main.engine_config import EngineConfigs
 from src.PyEng.main.engine_files import EngineFiles
+from src.PyEng.utils import exceptions
+from src.PyEng.utils import key_mappings
 from src.PyEng.utils.debugger import Debugger
 from src.PyEng.utils.error_manager import ErrorManager
-from src.shared import exceptions
-from src.shared import key_mappings
 
 
 class Engine:

@@ -4,7 +4,7 @@ import pytest
 
 from src.PyEng.main.engine import Engine
 from src.PyEng.main.engine_config import EngineConfigs
-from src.shared import exceptions
+from src.PyEng.utils import exceptions
 
 
 @pytest.fixture(autouse=True)

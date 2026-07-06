@@ -3,8 +3,8 @@ import pygame
 from src.Game.main.configs.game_config import GameConfig
 from src.Game.main.game_state import RenderGroup
 from src.PyEng.components.game.game_component import BaseGameComponent
-from src.shared.types import Colour
-from src.shared.types import SortingKey
+from src.PyEng.utils.types import Colour
+from src.PyEng.utils.types import SortingKey
 
 
 class Renderer(BaseGameComponent):

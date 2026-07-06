@@ -1,7 +1,7 @@
 from typing import Any, TYPE_CHECKING
 
-from src.shared import exceptions
-from src.shared.debug import Logger
+from src.PyEng.utils import exceptions
+from src.PyEng.utils.logger import Logger
 
 if TYPE_CHECKING:
   from src.PyEng.components.system.assets_manager import AssetsManager

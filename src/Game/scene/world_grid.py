@@ -4,8 +4,8 @@ import pygame
 
 from src.Game.main.configs.build_config import BuildConfig
 from src.PyEng.main.engine import Engine
-from src.shared import io
-from src.shared import serialisers
+from src.PyEng.utils import io
+from src.PyEng.utils import serialisers
 
 
 class Scene:

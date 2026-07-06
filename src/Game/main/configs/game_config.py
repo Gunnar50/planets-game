@@ -1,6 +1,6 @@
 from src.Game.main.game_state import GameState
 from src.PyEng.main.engine_config import EngineConfigs
-from src.shared.version import Version
+from src.PyEng.utils.version import Version
 
 
 class GameConfig(EngineConfigs):

@@ -4,7 +4,7 @@ import pygame
 
 from src.Game.repository.game_files import GameFiles
 from src.PyEng.components.system.system_component import SystemComponent
-from src.shared.debug import Logger
+from src.PyEng.utils.logger import Logger
 
 
 class AssetsManager(SystemComponent):

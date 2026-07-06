@@ -11,7 +11,7 @@ from types import TracebackType
 
 from src.PyEng.components.system.system_component import SystemComponent
 from src.PyEng.main.engine_files import EngineFiles
-from src.shared import exceptions
+from src.PyEng.utils import exceptions
 
 
 class ErrorManager(SystemComponent):
