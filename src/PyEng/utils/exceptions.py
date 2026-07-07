@@ -5,7 +5,7 @@ class ApplicationException(Exception):
   """Base class for all application exceptions."""
 
   def __init__(self, message: str, context: dict[str, Any] | None = None):
-    super().__init__(message)
+    Exception.__init__(self, message)
     self.context = context
 
 
@@ -51,3 +51,7 @@ class FailedToGetDataModel(ApplicationException):
 
 class NotDataclass(ApplicationException):
   """Raise when the specified class is not a dataclass"""
+
+
+class NoGameObjectException(ApplicationException):
+  """Raise if a component does not have a game object attach to it"""

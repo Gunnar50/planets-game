@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 import pygame
 
 from src.PyEng.components.system.system_manager import system_manager
+from src.PyEng.utils import exceptions
 
 if TYPE_CHECKING:
   from src.PyEng.components.game.game_object import GameObject
@@ -25,8 +26,9 @@ class BaseGameComponent:
   def start(self):
     """Called once when the object is initialized."""
     if self.game_object is None:
-      # TODO
-      raise Exception
+      raise exceptions.NoGameObjectException(
+        f'Component {self.__class__.__name__!r} should have a GameObject attach to it'
+      )
 
     self.transform = self.game_object.transform
 
