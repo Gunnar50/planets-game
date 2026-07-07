@@ -22,6 +22,7 @@ class BaseGameComponent:
     self.enabled = True
     self.system_components = system_manager
     self.assets_manager = self.system_components.get_assets_manager()
+    self.render_system = self.system_components.get_render()
 
   def start(self):
     """Called once when the object is initialized."""
@@ -32,10 +33,14 @@ class BaseGameComponent:
 
     self.transform = self.game_object.transform
 
-  def update(self, dt: float):
+  def update(self, dt: float) -> None:
     """Called every frame. Handles Logic."""
     pass
 
-  def draw(self, display: pygame.Surface):
+  def draw(self, display: pygame.Surface) -> None:
     """Called by the rendering system. Handled in Python by components."""
+    pass
+
+  def destroy(self) -> None:
+    """Called by the Component when is being destroyed."""
     pass

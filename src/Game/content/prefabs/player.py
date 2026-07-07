@@ -11,7 +11,7 @@ class PlayerPrefab(Prefab):
   Instantiate this anywhere to get a fully wired-up player.
 
   Usage:
-      player = PlayerPrefab().instantiate(x=100, y=300)
+      player = PlayerPrefab().create(x=100, y=300)
       scene.add_object(player)
   """
 

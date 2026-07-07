@@ -2,7 +2,7 @@ from src.PyEng.components.system.assets_manager import AssetsManager
 from src.PyEng.components.system.input import Input
 from src.PyEng.components.system.render import RenderSystem
 from src.PyEng.components.system.state_manager import StateManager
-from src.PyEng.components.system.system_manager import SystemManager
+from src.PyEng.components.system.system_manager import system_manager
 from src.PyEng.components.system.window import Window
 from src.PyEng.main.engine_config import EngineConfigs
 from src.PyEng.main.engine_files import EngineFiles
@@ -19,7 +19,7 @@ class Engine:
     self.window: Window
     self.input: Input
     self.render_system: RenderSystem
-    self.system_manager = SystemManager()
+    self.system_manager = system_manager
 
     self.check_assets_folder()
     self.create_engine_components(configs)
