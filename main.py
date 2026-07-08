@@ -36,15 +36,25 @@ class GameApp:
   def run(self) -> None:
     while True:
       delta_time = self.engine.window.delta_time
-      self.engine.update()
-      self.game_manager.update(delta_time)
-      self.engine.render()
 
+      # Events/Inputs
       if self.input.pressed(key_mappings.GameMapping.DOWN):
         print('DOWN')
       if self.input.pressed(key_mappings.GameMapping.MOUSE_LEFT):
         print('MOUSE_LEFT')
         print(self.input.mouse.position)
+        player = self.game_manager.get_current_scene().game_objects[0]
+        player.destroy()
+
+      # Updates
+      self.engine.update()
+      self.game_manager.update(delta_time)
+
+      # Cleanup scene (end of update)
+      self.game_manager.get_current_scene().cleanup()
+
+      # Render
+      self.engine.render()
 
     # self.game_manager.clean_up()
 

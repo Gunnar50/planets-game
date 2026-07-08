@@ -1,5 +1,6 @@
 from unittest import mock
 
+import pygame
 import pytest
 
 from src.PyEng.main.engine import Engine
@@ -10,6 +11,7 @@ from src.PyEng.utils import exceptions
 @pytest.fixture(autouse=True)
 def mock_window():
   with mock.patch('src.PyEng.main.engine.Window', autospec=True) as mock_window:
+    pygame.init()
     yield mock_window
 
 

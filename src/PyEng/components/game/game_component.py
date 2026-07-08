@@ -41,6 +41,6 @@ class BaseGameComponent:
     """Called by the rendering system. Handled in Python by components."""
     pass
 
-  def destroy(self) -> None:
+  def on_destroy(self) -> None:
     """Called by the Component when is being destroyed."""
     pass

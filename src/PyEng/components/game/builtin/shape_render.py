@@ -38,7 +38,7 @@ class Renderer(BaseGameComponent):
     self.position = self.transform.position
 
     # Register to the RenderSystem
-    self.system_components.get_render().register(self.render_group, self)
+    self.render_system.register(self.render_group, self)
 
   def _get_y_sort_key(self) -> SortingKey:
     return (
@@ -56,6 +56,10 @@ class Renderer(BaseGameComponent):
 
   def draw(self, display: pygame.Surface) -> None:
     raise NotImplementedError
+
+  def on_destroy(self) -> None:
+    self.render_system.unregister(self.render_group, self)
+    self.game_object = None
 
 
 class SquareRenderer(Renderer):

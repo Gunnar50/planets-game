@@ -82,3 +82,11 @@ class GameObject:
     """Render routine for visual components (like SpriteRenderer)."""
     if self.is_active and self.renderer:
       self.renderer.draw(display)
+
+  def destroy(self) -> None:
+    if self.is_active:
+      self.is_active = False
+      # Destroy all components of this game object
+      for component in self._components.values():
+        component.on_destroy()
+      self._components.clear()
