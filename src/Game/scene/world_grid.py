@@ -3,30 +3,14 @@ import pathlib
 import pygame
 
 from src.Game.main.configs.build_config import BuildConfig
-from src.PyEng.main.engine import Engine
+from src.PyEng.components.game.prefab import Prefab
 from src.PyEng.utils import io
-from src.PyEng.utils import serialisers
 
 
-class Scene:
-  WORLD_SIZE = 10
-
-  def __init__(self) -> None:
-    self.window = Engine.get_instance().window
-    self.world_grid = WorldGrid(self, Scene.WORLD_SIZE)
-
-  def update(self):
-    pass
-
-  def render(self):
-    self.world_grid.render(self.window.game_display)
-
-
-class WorldGrid(serialisers.Serialiser):
-  def __init__(self, scene: Scene, world_size: int) -> None:
-    self.scene = scene
+class WorldGrid(Prefab):
+  def __init__(self, world_size: int) -> None:
+    Prefab.__init__(self)
     self.world_size = world_size
-    game_manager_component = self.components_manager.get_game_manager()
 
   def save(self, file_path: pathlib.Path) -> None:
     output = io.export_data(self.export())
@@ -46,5 +30,5 @@ class WorldGrid(serialisers.Serialiser):
   def render(self, screen: pygame.Surface) -> None:
     self.draw_grid(screen)
 
-  def export(self):
+  def export(self) -> dict:
     return {}

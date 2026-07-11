@@ -43,8 +43,6 @@ class GameApp:
       if self.input.pressed(key_mappings.GameMapping.MOUSE_LEFT):
         print('MOUSE_LEFT')
         print(self.input.mouse.position)
-        player = self.game_manager.get_current_scene().game_objects[0]
-        player.destroy()
 
       # Updates
       self.engine.update()

@@ -1,9 +1,14 @@
+from typing import cast, TypeVar
+
 import pygame
 
 from src.PyEng.components.game.builtin.shape_render import Renderer
 from src.PyEng.components.game.builtin.transform import Transform
 from src.PyEng.components.game.game_component import BaseGameComponent
+from src.PyEng.utils import exceptions
 from src.PyEng.utils.logger import Logger
+
+TComponent = TypeVar('TComponent', bound=BaseGameComponent)
 
 
 class GameObject:
@@ -13,7 +18,7 @@ class GameObject:
   which is composition, not inheritance.
   """
 
-  def __init__(self, name='New GameObject'):
+  def __init__(self, name: str):
     self.name = name
     self.tag: str | None = None
     self.is_active = True  # GameObject active flag
@@ -46,17 +51,28 @@ class GameObject:
     component.game_object = self
     Logger.info(f'[{self.name}] Added component: {comp_type.__name__}')
 
-  def get_component(
+  def try_get_component(
     self,
-    component_type: type[BaseGameComponent],
-  ) -> BaseGameComponent | None:
+    component_type: type[TComponent],
+  ) -> TComponent | None:
     """Equivalent to Unity's gameObject.GetComponent<T>()."""
     if self.is_active:
       component = self._components.get(component_type)
       if component and component.enabled:
-        return component
+        return cast(TComponent, component)
 
     return None
+
+  def get_component(
+    self,
+    component_type: type[TComponent],
+  ) -> TComponent:
+    if self.is_active:
+      component = self._components.get(component_type)
+      if component and component.enabled:
+        return cast(TComponent, component)
+
+    raise exceptions.ComponentNotFoundError('Component not found')
 
   def start(self) -> None:
     """

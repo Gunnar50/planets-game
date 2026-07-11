@@ -1,7 +1,6 @@
 from src.Game.content.custom.player_movement import PlayerMovement
 from src.Game.main.game_state import RenderGroup
 from src.PyEng.components.game.builtin.shape_render import SpriteRenderer
-from src.PyEng.components.game.game_object import GameObject
 from src.PyEng.components.game.prefab import Prefab
 
 
@@ -16,17 +15,14 @@ class PlayerPrefab(Prefab):
   """
 
   # Should have create method to create prefab from a json file
-
-  def create(self, speed=200, health=100, **kwargs) -> GameObject:
-    obj = GameObject('Player')
-    obj.tag = 'Player'
-
-    # Transform is already added in GameObject.__init__
-    obj.transform.position = self.position
-    # TODO: Add rotation
-
+  def initialise_components(
+    self,
+    speed: int = 200,
+    health: int = 100,
+    **kwargs,
+  ) -> None:
     # Visual
-    obj.add_component(
+    self.add_component(
       SpriteRenderer(
         image_name='player',
         render_group=RenderGroup.GAME,
@@ -34,7 +30,5 @@ class PlayerPrefab(Prefab):
     )
 
     # Behaviour scripts
-    obj.add_component(PlayerMovement(speed=speed))
+    self.add_component(PlayerMovement(speed=speed))
     # obj.add_component(Health(max_health=health))
-
-    return obj

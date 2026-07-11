@@ -1,3 +1,6 @@
+import pygame
+
+from src.Game.content.prefabs.grid import GridPrefab
 from src.Game.content.prefabs.player import PlayerPrefab
 from src.PyEng.components.system.game_manager import Scene
 
@@ -15,8 +18,8 @@ class GameScene(Scene):
     """Populate the scene with GameObjects."""
 
     # Spawn player via prefab
-    player = PlayerPrefab(position=(100, 100)).create()
-    self.add_object(player)
+    GridPrefab().create()
+    PlayerPrefab(speed=200).create(position=pygame.Vector2(100, 100))
 
     # Spawn some enemies
     # for i in range(3):

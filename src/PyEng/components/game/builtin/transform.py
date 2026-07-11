@@ -14,6 +14,6 @@ class Transform(BaseGameComponent):
     self.rotation = angle
     self.scale = pygame.Vector2(1, 1)
 
-  def translate(self, dx: float, dy: float):
+  def translate(self, dx: float, dy: float) -> None:
     """Move by an offset."""
     self.position += pygame.Vector2(dx, dy)

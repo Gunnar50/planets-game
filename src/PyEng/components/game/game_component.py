@@ -33,6 +33,13 @@ class BaseGameComponent:
 
     self.transform = self.game_object.transform
 
+  def get_game_obj(self) -> 'GameObject':
+    if self.game_object is None:
+      raise exceptions.NoGameObjectException(
+        f'Prefab {self.__class__.__name__!r} should have a GameObject attach to it'
+      )
+    return self.game_object
+
   def update(self, dt: float) -> None:
     """Called every frame. Handles Logic."""
     pass
