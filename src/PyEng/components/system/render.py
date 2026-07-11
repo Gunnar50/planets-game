@@ -29,14 +29,14 @@ class RenderSystem(SystemComponent):
       screen_rect = target_surface.get_rect()
 
       render_queue = [
-        (render.sorting_key(), render)
-        for render in renderers
-        if render.enabled
-        and render.game_object
-        and render.game_object.is_active
-        and screen_rect.colliderect(render.bounds())
+        renderer
+        for renderer in renderers
+        if renderer.enabled
+        and renderer.game_object
+        and renderer.game_object.is_active
+        and screen_rect.colliderect(renderer.bounds())
       ]
       render_queue.sort()
 
-      for _, renderer in render_queue:
+      for renderer in render_queue:
         renderer.draw(target_surface)

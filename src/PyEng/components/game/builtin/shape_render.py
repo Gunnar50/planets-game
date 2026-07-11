@@ -61,6 +61,9 @@ class Renderer(BaseGameComponent):
     self.render_system.unregister(self.render_group, self)
     self.game_object = None
 
+  def __lt__(self, other: 'Renderer') -> bool:
+    return self.sorting_key() < other.sorting_key()
+
 
 class SquareRenderer(Renderer):
   """Shaper rendering component."""
