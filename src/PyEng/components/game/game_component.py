@@ -7,6 +7,7 @@ from src.PyEng.utils import exceptions
 
 if TYPE_CHECKING:
   from src.PyEng.components.game.game_object import GameObject
+  from src.PyEng.utils.types import TComponent
 
 
 class BaseGameComponent:
@@ -23,8 +24,19 @@ class BaseGameComponent:
     self.system_components = system_manager
     self.assets_manager = self.system_components.get_assets_manager()
     self.render_system = self.system_components.get_render()
+    self.input_mouse = self.system_components.get_input().mouse
+    self.is_hovered = False
 
-  def start(self):
+    # Check if child methods exists
+    self.has_mouse_enter = self.has_method('on_mouse_enter')
+    self.has_mouse_exit = self.has_method('on_mouse_exit')
+
+  def has_method(self, method_name: str) -> bool:
+    child_method = getattr(type(self), method_name)
+    parent_method = getattr(BaseGameComponent, method_name)
+    return child_method is not parent_method
+
+  def start(self) -> None:
     """Called once when the object is initialized."""
     if self.game_object is None:
       raise exceptions.NoGameObjectException(
@@ -33,12 +45,23 @@ class BaseGameComponent:
 
     self.transform = self.game_object.transform
 
-  def get_game_obj(self) -> 'GameObject':
+    # If this subclass overrides the default empty hover methods, register it!
+    if self.has_mouse_enter or self.has_mouse_exit:
+      self.input_mouse.register_interactive(self)
+
+  def on_destroy(self) -> None:
+    if self.has_mouse_enter or self.has_mouse_exit:
+      self.input_mouse.unregister_interactive(self)
+
+  def get_game_object(self) -> 'GameObject':
     if self.game_object is None:
       raise exceptions.NoGameObjectException(
         f'Prefab {self.__class__.__name__!r} should have a GameObject attach to it'
       )
     return self.game_object
+
+  def get_component(self, component_type: type['TComponent']) -> 'TComponent':
+    return self.get_game_object().get_component(component_type)
 
   def update(self, dt: float) -> None:
     """Called every frame. Handles Logic."""
@@ -48,6 +71,8 @@ class BaseGameComponent:
     """Called by the rendering system. Handled in Python by components."""
     pass
 
-  def on_destroy(self) -> None:
-    """Called by the Component when is being destroyed."""
+  def on_mouse_enter(self) -> None:
+    pass
+
+  def on_mouse_exit(self) -> None:
     pass

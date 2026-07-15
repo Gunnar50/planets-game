@@ -5,6 +5,7 @@ import time
 import pygame
 
 from src.Game.main.configs.build_config import BuildConfig
+from src.PyEng.components.game.game_component import BaseGameComponent
 from src.PyEng.components.system.system_component import SystemComponent
 from src.PyEng.utils import api
 from src.PyEng.utils import io
@@ -106,7 +107,7 @@ class Keyboard:
   def __init__(self, input_config: dict[key_mappings.MappingBase, InputState]):
     self.input = input_config
 
-  def update(self, event: pygame.event.Event):
+  def update(self, event: pygame.event.Event) -> None:
     if event.type == pygame.KEYDOWN:
       if event.key == pygame.K_ESCAPE:
         pygame.quit()
@@ -128,6 +129,7 @@ class Mouse:
     self.position = api.Position(0, 0)
     self.ui_position = api.Position(0, 0)
     self.movement = api.Position(0, 0)
+    self._interactive_components: list[BaseGameComponent] = []
 
   def get_position(self) -> api.Position:
     return api.Position(
@@ -135,12 +137,15 @@ class Mouse:
       self.position.y // BuildConfig.tile_height,
     )
 
-  def update(self, event: pygame.event.Event):
+  def update(self, event: pygame.event.Event) -> None:
     mx, my = pygame.mouse.get_pos()
     self.position = api.Position(
       mx // BuildConfig.scale_factor, my // BuildConfig.scale_factor
     )
     self.ui_x, self.ui_y = self.position.x // 2, self.position.y // 2
+
+    if event.type == pygame.MOUSEMOTION:
+      self._process_mouse_hovers()
 
     if event.type == pygame.MOUSEBUTTONDOWN:
       for state in self.input.values():
@@ -151,3 +156,30 @@ class Mouse:
       for state in self.input.values():
         if state.type == api.InputType.MOUSE and event.button == state.input_id:
           state.unpress()
+
+  def register_interactive(self, component: BaseGameComponent) -> None:
+    if component not in self._interactive_components:
+      self._interactive_components.append(component)
+
+  def unregister_interactive(self, component: BaseGameComponent) -> None:
+    if component in self._interactive_components:
+      self._interactive_components.remove(component)
+
+  def _process_mouse_hovers(self) -> None:
+    """Checks bounds and dispatches enter/exit events to subscribers."""
+    mouse_point = (self.position.x, self.position.y)
+
+    for component in self._interactive_components:
+      game_object = component.get_game_object()
+      # Skip if component or parent GameObject is inactive
+      if component.enabled and game_object.is_active:
+        # Ensure the object actually has a renderer to check bounds against
+        if renderer := game_object.renderer:
+          # Check collision
+          is_mouse_over = renderer.bounds().collidepoint(mouse_point)
+          if is_mouse_over and not component.is_hovered:
+            component.is_hovered = True
+            component.on_mouse_enter()
+          elif not is_mouse_over and component.is_hovered:
+            component.is_hovered = False
+            component.on_mouse_exit()

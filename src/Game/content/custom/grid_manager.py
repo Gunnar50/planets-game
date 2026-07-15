@@ -1,13 +1,11 @@
-import pygame
-
+from src.Game.content.custom.tile import Tile
 from src.Game.content.prefabs.tile import TilePrefab
-from src.PyEng.components.game.builtin.shape_render import SquareRenderer
-from src.PyEng.components.game.game_component import BaseGameComponent
+from src.PyEng.components.game.builtin.grid import Grid
 
 
-class GridManager(BaseGameComponent):
+class GridManager(Grid):
   def __init__(self, width: int, height: int):
-    BaseGameComponent.__init__(self)
+    Grid.__init__(self)
     self.width, self.height = width, height
     self.tile_prefab = TilePrefab
 
@@ -18,13 +16,12 @@ class GridManager(BaseGameComponent):
   def generate_grid(self) -> None:
     for x in range(self.width):
       for y in range(self.height):
-        tile = self.tile_prefab().create(
+        tile = self.tile_prefab(
+          cell_width=self.cell_width,
+          cell_height=self.cell_height,
+        ).create(
           name=f'Tile: {x}, {y}',
-          position=pygame.Vector2(x, y),
+          position=self.cell_to_world(cell_coords=(x, y)),
         )
-        renderer = tile.get_component(SquareRenderer)
-        is_offset = (x + y) % 2 == 0
-        if is_offset:
-          renderer.colour = (200, 0, 0)
-        else:
-          renderer.colour = (100, 0, 0)
+        tile_script = tile.get_component(Tile)
+        tile_script.update_colour(is_offset=(x + y) % 2 == 0)

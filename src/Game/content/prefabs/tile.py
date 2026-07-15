@@ -4,13 +4,19 @@ from src.PyEng.components.game.prefab import Prefab
 
 
 class TilePrefab(Prefab):
-  base_colour = (200, 0, 0)
-  offset_colour = (100, 0, 0)
-
-  def initialise_components(self, **kwargs) -> None:
+  def initialise_components(
+    self,
+    cell_width: int = 100,
+    cell_height: int = 100,
+    **kwargs,
+  ) -> None:
     # Visual
     self.add_component(
-      SquareRenderer(colour=(100, 0, 0), width=100, height=100)
+      SquareRenderer(
+        colour=(100, 0, 0),
+        width=cell_width,
+        height=cell_height,
+      )
     )
 
     # Behaviour Scripts

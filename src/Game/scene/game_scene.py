@@ -18,7 +18,7 @@ class GameScene(Scene):
     """Populate the scene with GameObjects."""
 
     # Spawn player via prefab
-    GridPrefab().create()
+    GridPrefab(width=10, height=10).create()
     PlayerPrefab(speed=200).create(position=pygame.Vector2(100, 100))
 
     # Spawn some enemies

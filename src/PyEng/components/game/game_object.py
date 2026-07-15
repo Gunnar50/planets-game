@@ -1,4 +1,4 @@
-from typing import cast, TypeVar
+from typing import cast
 
 import pygame
 
@@ -7,8 +7,7 @@ from src.PyEng.components.game.builtin.transform import Transform
 from src.PyEng.components.game.game_component import BaseGameComponent
 from src.PyEng.utils import exceptions
 from src.PyEng.utils.logger import Logger
-
-TComponent = TypeVar('TComponent', bound=BaseGameComponent)
+from src.PyEng.utils.types import TComponent
 
 
 class GameObject:
@@ -63,10 +62,7 @@ class GameObject:
 
     return None
 
-  def get_component(
-    self,
-    component_type: type[TComponent],
-  ) -> TComponent:
+  def get_component(self, component_type: type[TComponent]) -> TComponent:
     if self.is_active:
       component = self._components.get(component_type)
       if component and component.enabled:

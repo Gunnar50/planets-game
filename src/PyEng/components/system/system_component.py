@@ -21,8 +21,8 @@ class SystemComponent:
     if add:
       system_manager.add_element(self)
 
-  def update(self):
+  def update(self) -> None:
     pass
 
-  def __repr__(self):
+  def __repr__(self) -> str:
     return f'System Component: {self.__class__.__name__!r}'
