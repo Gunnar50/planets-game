@@ -26,6 +26,7 @@ class GameObject:
 
     # A simple list/dict holding all attached components.
     self._components: dict[type[BaseGameComponent], BaseGameComponent] = {}
+    self._update_components: list[BaseGameComponent] = []
 
     # We always add the transform component as the base.
     self.add_component(self.transform)
@@ -45,10 +46,18 @@ class GameObject:
         return
 
     # Simplified key lookup based on class type
-    comp_type = type(component)
-    self._components[comp_type] = component
+    component_type = type(component)
+    self._components[component_type] = component
     component.game_object = self
-    Logger.info(f'[{self.name}] Added component: {comp_type.__name__}')
+    Logger.info(f'[{self.name}] Added component: {component_type.__name__}')
+
+  def register_update(self, component: BaseGameComponent) -> None:
+    if component not in self._update_components:
+      self._update_components.append(component)
+
+  def unregister_update(self, component: BaseGameComponent) -> None:
+    if component in self._update_components:
+      self._update_components.remove(component)
 
   def try_get_component(
     self,
@@ -82,11 +91,13 @@ class GameObject:
             f'[{self.name}] Started component: {type(component).__name__}'
           )
           component.start()
+    Logger.debug(f'{self.name} {len(self._components)=}')
+    Logger.debug(f'{self.name} {len(self._update_components)=}')
 
   def update(self, dt: float) -> None:
     """Updates all enabled components (excluding transform data update)."""
     if self.is_active:
-      for component in self._components.values():
+      for component in self._update_components:
         if component.enabled:
           component.update(dt)
 
@@ -102,3 +113,4 @@ class GameObject:
       for component in self._components.values():
         component.on_destroy()
       self._components.clear()
+      self._update_components.clear()

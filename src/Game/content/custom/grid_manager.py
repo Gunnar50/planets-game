@@ -1,5 +1,5 @@
 from src.Game.content.custom.tile import Tile
-from src.Game.content.prefabs.tile import TilePrefab
+from src.Game.content.prefabs.tile_prefab import TilePrefab
 from src.PyEng.components.game.builtin.grid import Grid
 
 

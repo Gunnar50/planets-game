@@ -1,7 +1,5 @@
 from typing import TYPE_CHECKING
 
-import pygame
-
 from src.PyEng.components.system.system_manager import system_manager
 from src.PyEng.utils import exceptions
 
@@ -30,6 +28,7 @@ class BaseGameComponent:
     # Check if child methods exists
     self.has_mouse_enter = self.has_method('on_mouse_enter')
     self.has_mouse_exit = self.has_method('on_mouse_exit')
+    self.has_update = self.has_method('update')
 
   def has_method(self, method_name: str) -> bool:
     child_method = getattr(type(self), method_name)
@@ -48,6 +47,8 @@ class BaseGameComponent:
     # If this subclass overrides the default empty hover methods, register it!
     if self.has_mouse_enter or self.has_mouse_exit:
       self.input_mouse.register_interactive(self)
+    if self.has_update:
+      self.get_game_object().register_update(self)
 
   def on_destroy(self) -> None:
     if self.has_mouse_enter or self.has_mouse_exit:
@@ -65,10 +66,6 @@ class BaseGameComponent:
 
   def update(self, dt: float) -> None:
     """Called every frame. Handles Logic."""
-    pass
-
-  def draw(self, display: pygame.Surface) -> None:
-    """Called by the rendering system. Handled in Python by components."""
     pass
 
   def on_mouse_enter(self) -> None:

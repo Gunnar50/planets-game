@@ -13,3 +13,7 @@ class Logger:
   @staticmethod
   def error(message: Any) -> None:
     print(f'ERROR: {message}')
+
+  @staticmethod
+  def debug(message: Any) -> None:
+    print(f'DEBUG: {message}')

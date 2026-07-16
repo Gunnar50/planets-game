@@ -11,9 +11,6 @@ class Tile(BaseGameComponent):
     super().start()
     self.renderer = self.get_component(SquareRenderer)
 
-  def update(self, dt: float) -> None:
-    pass
-
   def update_colour(self, is_offset: bool) -> None:
     if is_offset:
       self.renderer.colour = self.offset_colour
