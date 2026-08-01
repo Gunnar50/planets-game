@@ -1,15 +1,15 @@
-from src.PyEng.components.system.assets_manager import AssetsManager
-from src.PyEng.components.system.input import Input
-from src.PyEng.components.system.render import RenderSystem
-from src.PyEng.components.system.state_manager import StateManager
-from src.PyEng.components.system.system_manager import system_manager
-from src.PyEng.components.system.window import Window
-from src.PyEng.main.engine_config import EngineConfigs
-from src.PyEng.main.engine_files import EngineFiles
-from src.PyEng.utils import exceptions
-from src.PyEng.utils import key_mappings
-from src.PyEng.utils.debugger import Debugger
-from src.PyEng.utils.error_manager import ErrorManager
+from PyEng.components.system.assets_manager import AssetsManager
+from PyEng.components.system.input import Input
+from PyEng.components.system.render import RenderSystem
+from PyEng.components.system.state_manager import StateManager
+from PyEng.components.system.system_manager import system_manager
+from PyEng.components.system.window import Window
+from PyEng.main.engine_config import EngineConfigs
+from PyEng.main.engine_files import EngineFiles
+from PyEng.utils import exceptions
+from PyEng.utils import key_mappings
+from PyEng.utils.debugger import Debugger
+from PyEng.utils.error_manager import ErrorManager
 
 
 class Engine:
