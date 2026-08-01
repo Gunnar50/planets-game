@@ -1,0 +1,66 @@
+[project]
+name = "PyEng"
+version = "0.1.0"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "pydantic>=2.13.2",
+  "pygame-ce>=2.5.7",
+]
+
+[dependency-groups]
+dev = [
+  "pytest-mock>=3.15.1",
+  "pytest>=8.4.2",
+  "pytype>=2024.10.11",
+  "ruff>=0.15.10",
+]
+
+[tool.uv]
+required-version=">=0.11.5"
+
+[tool.ruff]
+indent-width = 2
+line-length = 80
+
+[tool.ruff.format]
+quote-style = "single"
+
+[tool.ruff.lint]
+# enable lint rules https://docs.astral.sh/ruff/rules/
+extend-select = [
+  # https://docs.astral.sh/ruff/rules/#pyflakes-f
+  "F",
+  # isort https://docs.astral.sh/ruff/rules/#isort-i
+  "I",
+  # pylint convention https://docs.astral.sh/ruff/rules/#convention-plc
+  "PLC",
+  # pylint errors https://docs.astral.sh/ruff/rules/#error-ple
+  "PLE",
+  # pyupgrade https://docs.astral.sh/ruff/rules/#pyupgrade-up
+  "UP",
+]
+
+# exceptions to the above
+ignore = [
+  # TODO: enable these?
+  # https://docs.astral.sh/ruff/rules/import-outside-top-level/
+  "PLC0415",
+  # https://docs.astral.sh/ruff/rules/true-false-comparison/
+  # Used a lot in ndb query filters
+  "E712",
+]
+
+[tool.ruff.lint.isort]
+# Apply the google profile
+# https://pycqa.github.io/isort/docs/configuration/profiles.html
+force-single-line = true
+force-sort-within-sections = true
+order-by-type = false
+single-line-exclusions = ["collections.abc", "typing"]
+
+[build-system]
+requires = ["setuptools>=83.0.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src/PyEng"]
