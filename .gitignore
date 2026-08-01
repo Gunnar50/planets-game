@@ -4,6 +4,7 @@ PyEng/__pycache__
 .pytype
 ErrorLogs/
 *.egg-info/
+build/
 
 # Key mappings are generated locally
 src/shared/key_mappings.py
