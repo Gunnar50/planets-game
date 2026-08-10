@@ -1,15 +1,15 @@
 from typing import Any, TYPE_CHECKING
 
-from src.PyEng.utils import exceptions
-from src.PyEng.utils.logger import Logger
+from PyEng.utils import exceptions
+from PyEng.utils.logger import Logger
 
 if TYPE_CHECKING:
-  from src.PyEng.components.system.assets_manager import AssetsManager
-  from src.PyEng.components.system.game_manager import GameManager
-  from src.PyEng.components.system.input import Input
-  from src.PyEng.components.system.render import RenderSystem
-  from src.PyEng.components.system.system_component import SystemComponent
-  from src.PyEng.components.system.window import Window
+  from PyEng.components.system.assets_manager import AssetsManager
+  from PyEng.components.system.game_manager import GameManager
+  from PyEng.components.system.input import Input
+  from PyEng.components.system.render import RenderSystem
+  from PyEng.components.system.system_component import SystemComponent
+  from PyEng.components.system.window import Window
 
 
 class SystemManager:

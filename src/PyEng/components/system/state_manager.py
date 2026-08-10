@@ -1,6 +1,6 @@
 import abc
 
-from src.PyEng.components.system.system_component import SystemComponent
+from PyEng.components.system.system_component import SystemComponent
 
 
 class State(abc.ABC):

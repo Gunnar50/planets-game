@@ -2,12 +2,12 @@ from typing import TYPE_CHECKING
 
 import pygame
 
-from src.PyEng.components.game.game_object import GameObject
-from src.PyEng.components.system.game_manager import Scene
-from src.PyEng.utils import exceptions
+from PyEng.components.game.game_object import GameObject
+from PyEng.components.system.game_manager import Scene
+from PyEng.utils import exceptions
 
 if TYPE_CHECKING:
-  from src.PyEng.components.game.game_component import BaseGameComponent
+  from PyEng.components.game.game_component import BaseGameComponent
 
 
 class Prefab:

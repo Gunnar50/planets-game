@@ -3,9 +3,9 @@ from unittest import mock
 import pygame
 import pytest
 
-from src.PyEng.main.engine import Engine
-from src.PyEng.main.engine_config import EngineConfigs
-from src.PyEng.utils import exceptions
+from PyEng.main.engine import Engine
+from PyEng.main.engine_config import EngineConfigs
+from PyEng.utils import exceptions
 
 
 @pytest.fixture(autouse=True)

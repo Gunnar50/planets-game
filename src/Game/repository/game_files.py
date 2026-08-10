@@ -1,6 +1,6 @@
 import pathlib
 
-from src.PyEng.main.engine_files import EngineFiles
+from PyEng.main.engine_files import EngineFiles
 
 
 class GameFiles:

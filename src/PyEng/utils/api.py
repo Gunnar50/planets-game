@@ -6,8 +6,8 @@ from typing import Self
 import pydantic
 import pygame
 
-from src.PyEng.utils import serialisers
-from src.PyEng.utils.types import Coordinate
+from PyEng.utils import serialisers
+from PyEng.utils.types import Coordinate
 
 
 class RenderObjects(pydantic.BaseModel):

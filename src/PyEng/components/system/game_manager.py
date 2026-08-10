@@ -1,9 +1,9 @@
 from typing import TYPE_CHECKING
 
-from src.PyEng.utils.logger import Logger
+from PyEng.utils.logger import Logger
 
 if TYPE_CHECKING:
-  from src.PyEng.components.game.game_object import GameObject
+  from PyEng.components.game.game_object import GameObject
 
 
 class Scene:

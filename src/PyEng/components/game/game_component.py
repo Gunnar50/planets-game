@@ -1,11 +1,11 @@
 from typing import TYPE_CHECKING
 
-from src.PyEng.components.system.system_manager import system_manager
-from src.PyEng.utils import exceptions
+from PyEng.components.system.system_manager import system_manager
+from PyEng.utils import exceptions
 
 if TYPE_CHECKING:
-  from src.PyEng.components.game.game_object import GameObject
-  from src.PyEng.utils.types import TComponent
+  from PyEng.components.game.game_object import GameObject
+  from PyEng.utils.types import TComponent
 
 
 class BaseGameComponent:

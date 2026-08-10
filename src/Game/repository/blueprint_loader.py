@@ -2,14 +2,14 @@ import dataclasses
 import pathlib
 from typing import Any
 
-from src.Game.repository.game_components import Blueprint
-from src.Game.repository.game_components import EntityBlueprint
-from src.Game.repository.game_components import ItemBlueprint
-from src.Game.repository.game_components import TileBlueprint
-from src.Game.repository.game_files import GameFiles
-from src.PyEng.utils import exceptions
-from src.PyEng.utils import io
-from src.PyEng.utils.hash_registry import HashRegistry
+from Game.repository.game_components import Blueprint
+from Game.repository.game_components import EntityBlueprint
+from Game.repository.game_components import ItemBlueprint
+from Game.repository.game_components import TileBlueprint
+from Game.repository.game_files import GameFiles
+from PyEng.utils import exceptions
+from PyEng.utils import io
+from PyEng.utils.hash_registry import HashRegistry
 
 
 @dataclasses.dataclass

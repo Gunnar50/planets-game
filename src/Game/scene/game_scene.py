@@ -1,8 +1,8 @@
 import pygame
 
-from src.Game.content.prefabs.grid import GridPrefab
-from src.Game.content.prefabs.player import PlayerPrefab
-from src.PyEng.components.system.game_manager import Scene
+from Game.content.prefabs.grid import GridPrefab
+from Game.content.prefabs.player import PlayerPrefab
+from PyEng.components.system.game_manager import Scene
 
 
 class GameScene(Scene):

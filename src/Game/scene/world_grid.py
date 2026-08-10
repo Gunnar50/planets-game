@@ -2,9 +2,9 @@ import pathlib
 
 import pygame
 
-from src.Game.main.configs.build_config import BuildConfig
-from src.PyEng.components.game.prefab import Prefab
-from src.PyEng.utils import io
+from Game.main.configs.build_config import BuildConfig
+from PyEng.components.game.prefab import Prefab
+from PyEng.utils import io
 
 
 class WorldGrid(Prefab):

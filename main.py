@@ -1,10 +1,10 @@
 import pygame
 
-from src.Game.main.configs.build_config import BuildConfig
-from src.Game.scene.game_scene import GameScene
-from src.PyEng.components.system.game_manager import GameManager
-from src.PyEng.main.engine import Engine
-from src.PyEng.utils import key_mappings
+from Game.main.configs.build_config import BuildConfig
+from Game.scene.game_scene import GameScene
+from PyEng.components.system.game_manager import GameManager
+from PyEng.main.engine import Engine
+from PyEng.utils import key_mappings
 
 if not pygame.IS_CE:
   raise Exception('Not running Pygame-CE')

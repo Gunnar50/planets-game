@@ -1,4 +1,4 @@
-from src.Game.main.configs.game_config import GameConfig
+from Game.main.configs.game_config import GameConfig
 
 
 class BuildConfig(GameConfig):

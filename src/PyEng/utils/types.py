@@ -1,7 +1,7 @@
 from collections.abc import Sequence
 from typing import TypeVar
 
-from src.PyEng.components.game.game_component import BaseGameComponent
+from PyEng.components.game.game_component import BaseGameComponent
 
 Coordinate = tuple[float, float] | Sequence[float]
 RGBAOutput = tuple[int, int, int, int]

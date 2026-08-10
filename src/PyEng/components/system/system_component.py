@@ -1,4 +1,4 @@
-from src.PyEng.components.system.system_manager import system_manager
+from PyEng.components.system.system_manager import system_manager
 
 
 class SystemComponent:

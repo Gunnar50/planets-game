@@ -2,9 +2,9 @@ import time
 
 import pygame
 
-from src.Game.main.configs.build_config import BuildConfig
-from src.Game.main.game_state import RenderGroup
-from src.PyEng.components.system.system_component import SystemComponent
+from Game.main.configs.build_config import BuildConfig
+from Game.main.game_state import RenderGroup
+from PyEng.components.system.system_component import SystemComponent
 
 
 class Window(SystemComponent):

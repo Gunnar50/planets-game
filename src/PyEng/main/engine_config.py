@@ -1,4 +1,4 @@
-from src.PyEng.components.system.state_manager import State
+from PyEng.components.system.state_manager import State
 
 
 class EngineConfigs:

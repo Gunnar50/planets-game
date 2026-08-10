@@ -1,6 +1,6 @@
-from src.Game.content.custom.tile import Tile
-from src.Game.content.prefabs.tile_prefab import TilePrefab
-from src.PyEng.components.game.builtin.grid import Grid
+from Game.content.custom.tile import Tile
+from Game.content.prefabs.tile_prefab import TilePrefab
+from PyEng.components.game.builtin.grid import Grid
 
 
 class GridManager(Grid):

@@ -2,7 +2,7 @@ import enum
 
 import pygame
 
-from src.PyEng.components.game.game_component import BaseGameComponent
+from PyEng.components.game.game_component import BaseGameComponent
 
 
 class GridLayout(enum.Enum):

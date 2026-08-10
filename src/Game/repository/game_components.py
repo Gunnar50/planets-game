@@ -2,8 +2,8 @@ import dataclasses
 
 import pygame
 
-from src.Game.main.configs.build_config import BuildConfig
-from src.PyEng.utils.hash_registry import Registrable
+from Game.main.configs.build_config import BuildConfig
+from PyEng.utils.hash_registry import Registrable
 
 
 @dataclasses.dataclass

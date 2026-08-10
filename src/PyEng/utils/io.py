@@ -7,9 +7,9 @@ from typing import Any, cast, get_origin, TypeVar
 import pydantic
 import pygame
 
-from src.PyEng.utils import exceptions
-from src.PyEng.utils import serialisers
-from src.PyEng.utils.logger import Logger
+from PyEng.utils import exceptions
+from PyEng.utils import serialisers
+from PyEng.utils.logger import Logger
 
 BlueprintType = TypeVar('BlueprintType')
 ModelType = TypeVar('ModelType', bound=pydantic.BaseModel)

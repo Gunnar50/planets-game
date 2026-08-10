@@ -2,9 +2,9 @@ import pathlib
 
 import pygame
 
-from src.Game.repository.game_files import GameFiles
-from src.PyEng.components.system.system_component import SystemComponent
-from src.PyEng.utils.logger import Logger
+from Game.repository.game_files import GameFiles
+from PyEng.components.system.system_component import SystemComponent
+from PyEng.utils.logger import Logger
 
 
 class AssetsManager(SystemComponent):

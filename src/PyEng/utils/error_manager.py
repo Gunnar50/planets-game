@@ -9,9 +9,9 @@ import sys
 import traceback
 from types import TracebackType
 
-from src.PyEng.components.system.system_component import SystemComponent
-from src.PyEng.main.engine_files import EngineFiles
-from src.PyEng.utils import exceptions
+from PyEng.components.system.system_component import SystemComponent
+from PyEng.main.engine_files import EngineFiles
+from PyEng.utils import exceptions
 
 
 class ErrorManager(SystemComponent):

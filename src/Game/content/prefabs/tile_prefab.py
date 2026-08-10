@@ -1,6 +1,6 @@
-from src.Game.content.custom.tile import Tile
-from src.PyEng.components.game.builtin.shape_render import SquareRenderer
-from src.PyEng.components.game.prefab import Prefab
+from Game.content.custom.tile import Tile
+from PyEng.components.game.builtin.shape_render import SquareRenderer
+from PyEng.components.game.prefab import Prefab
 
 
 class TilePrefab(Prefab):

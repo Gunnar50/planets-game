@@ -4,12 +4,12 @@ import time
 
 import pygame
 
-from src.Game.main.configs.build_config import BuildConfig
-from src.PyEng.components.game.game_component import BaseGameComponent
-from src.PyEng.components.system.system_component import SystemComponent
-from src.PyEng.utils import api
-from src.PyEng.utils import io
-from src.PyEng.utils import key_mappings
+from Game.main.configs.build_config import BuildConfig
+from PyEng.components.game.game_component import BaseGameComponent
+from PyEng.components.system.system_component import SystemComponent
+from PyEng.utils import api
+from PyEng.utils import io
+from PyEng.utils import key_mappings
 
 
 class InputState:

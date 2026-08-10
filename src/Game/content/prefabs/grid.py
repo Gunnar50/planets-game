@@ -1,5 +1,5 @@
-from src.Game.content.custom.grid_manager import GridManager
-from src.PyEng.components.game.prefab import Prefab
+from Game.content.custom.grid_manager import GridManager
+from PyEng.components.game.prefab import Prefab
 
 
 class GridPrefab(Prefab):

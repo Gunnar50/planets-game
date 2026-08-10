@@ -2,8 +2,8 @@ import abc
 from collections.abc import Iterable, Iterator
 from typing import TypeVar
 
-from src.PyEng.utils import exceptions
-from src.PyEng.utils.logger import Logger
+from PyEng.utils import exceptions
+from PyEng.utils.logger import Logger
 
 # Type variable RegistrableType, which is a subclass of Registrable
 RegistrableType = TypeVar('RegistrableType', bound='Registrable')
