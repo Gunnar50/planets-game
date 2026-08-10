@@ -4,7 +4,7 @@ import time
 
 import pygame
 
-from Game.main.configs.build_config import BuildConfig
+from prototype.main.configs.build_config import BuildConfig
 from PyEng.components.game.game_component import BaseGameComponent
 from PyEng.components.system.system_component import SystemComponent
 from PyEng.utils import api

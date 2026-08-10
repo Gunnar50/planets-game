@@ -2,7 +2,7 @@ from collections import defaultdict
 
 import pygame
 
-from Game.main.game_state import RenderGroup
+from prototype.main.game_state import RenderGroup
 from PyEng.components.game.builtin.shape_render import Renderer
 from PyEng.components.system.system_component import SystemComponent
 

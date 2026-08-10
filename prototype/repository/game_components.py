@@ -2,7 +2,7 @@ import dataclasses
 
 import pygame
 
-from Game.main.configs.build_config import BuildConfig
+from prototype.main.configs.build_config import BuildConfig
 from PyEng.utils.hash_registry import Registrable
 
 

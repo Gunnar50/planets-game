@@ -1,4 +1,4 @@
-from Game.content.custom.grid_manager import GridManager
+from prototype.content.custom.grid_manager import GridManager
 from PyEng.components.game.prefab import Prefab
 
 

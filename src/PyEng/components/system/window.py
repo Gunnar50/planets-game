@@ -2,8 +2,8 @@ import time
 
 import pygame
 
-from Game.main.configs.build_config import BuildConfig
-from Game.main.game_state import RenderGroup
+from prototype.main.configs.build_config import BuildConfig
+from prototype.main.game_state import RenderGroup
 from PyEng.components.system.system_component import SystemComponent
 
 

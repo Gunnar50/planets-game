@@ -1,4 +1,4 @@
-from Game.main.game_state import GameState
+from prototype.main.game_state import GameState
 from PyEng.main.engine_config import EngineConfigs
 from PyEng.utils.version import Version
 

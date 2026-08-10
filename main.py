@@ -1,7 +1,7 @@
 import pygame
 
-from Game.main.configs.build_config import BuildConfig
-from Game.scene.game_scene import GameScene
+from prototype.main.configs.build_config import BuildConfig
+from prototype.scene.game_scene import GameScene
 from PyEng.components.system.game_manager import GameManager
 from PyEng.main.engine import Engine
 from PyEng.utils import key_mappings

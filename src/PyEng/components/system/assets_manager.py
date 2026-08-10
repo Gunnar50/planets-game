@@ -2,7 +2,7 @@ import pathlib
 
 import pygame
 
-from Game.repository.game_files import GameFiles
+from prototype.repository.game_files import GameFiles
 from PyEng.components.system.system_component import SystemComponent
 from PyEng.utils.logger import Logger
 

@@ -2,7 +2,7 @@ import pathlib
 
 import pygame
 
-from Game.main.configs.build_config import BuildConfig
+from prototype.main.configs.build_config import BuildConfig
 from PyEng.components.game.prefab import Prefab
 from PyEng.utils import io
 

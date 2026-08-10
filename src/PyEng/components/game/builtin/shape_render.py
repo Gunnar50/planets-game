@@ -1,7 +1,7 @@
 import pygame
 
-from Game.main.configs.game_config import GameConfig
-from Game.main.game_state import RenderGroup
+from prototype.main.configs.game_config import GameConfig
+from prototype.main.game_state import RenderGroup
 from PyEng.components.game.game_component import BaseGameComponent
 from PyEng.utils.types import Colour
 from PyEng.utils.types import SortingKey

@@ -2,11 +2,11 @@ import dataclasses
 import pathlib
 from typing import Any
 
-from Game.repository.game_components import Blueprint
-from Game.repository.game_components import EntityBlueprint
-from Game.repository.game_components import ItemBlueprint
-from Game.repository.game_components import TileBlueprint
-from Game.repository.game_files import GameFiles
+from prototype.repository.game_components import Blueprint
+from prototype.repository.game_components import EntityBlueprint
+from prototype.repository.game_components import ItemBlueprint
+from prototype.repository.game_components import TileBlueprint
+from prototype.repository.game_files import GameFiles
 from PyEng.utils import exceptions
 from PyEng.utils import io
 from PyEng.utils.hash_registry import HashRegistry
