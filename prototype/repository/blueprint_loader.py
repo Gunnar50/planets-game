@@ -7,9 +7,9 @@ from prototype.repository.game_components import EntityBlueprint
 from prototype.repository.game_components import ItemBlueprint
 from prototype.repository.game_components import TileBlueprint
 from prototype.repository.game_files import GameFiles
-from PyEng.utils import exceptions
-from PyEng.utils import io
-from PyEng.utils.hash_registry import HashRegistry
+from pyeng.utils import exceptions
+from pyeng.utils import io
+from pyeng.utils.hash_registry import HashRegistry
 
 
 @dataclasses.dataclass

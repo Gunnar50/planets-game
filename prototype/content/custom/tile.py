@@ -1,5 +1,5 @@
-from PyEng.components.game.builtin.shape_render import SquareRenderer
-from PyEng.components.game.game_component import BaseGameComponent
+from pyeng.components.game.builtin.shape_render import SquareRenderer
+from pyeng.components.game.game_component import BaseGameComponent
 
 
 class Tile(BaseGameComponent):

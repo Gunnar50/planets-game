@@ -3,7 +3,7 @@ import dataclasses
 import pygame
 
 from prototype.main.configs.build_config import BuildConfig
-from PyEng.utils.hash_registry import Registrable
+from pyeng.utils.hash_registry import Registrable
 
 
 @dataclasses.dataclass

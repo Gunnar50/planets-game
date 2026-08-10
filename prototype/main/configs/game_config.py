@@ -1,6 +1,6 @@
 from prototype.main.game_state import GameState
-from PyEng.main.engine_config import EngineConfigs
-from PyEng.utils.version import Version
+from pyeng.main.engine_config import EngineConfigs
+from pyeng.utils.version import Version
 
 
 class GameConfig(EngineConfigs):
@@ -12,5 +12,3 @@ class GameConfig(EngineConfigs):
   session_creator = NotImplemented
   initial_state = GameState.INITIAL
   in_game_state = GameState.IN_GAME
-  # Sorting by Y axis is used mostly for top down games
-  sort_by_y_axis = False

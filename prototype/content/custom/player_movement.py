@@ -1,6 +1,6 @@
 import pygame
 
-from PyEng.components.game.game_component import BaseGameComponent
+from pyeng.components.game.game_component import BaseGameComponent
 
 
 class PlayerMovement(BaseGameComponent):
