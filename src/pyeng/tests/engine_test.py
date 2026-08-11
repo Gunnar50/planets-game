@@ -4,7 +4,7 @@ import pygame
 import pytest
 
 from pyeng.main.engine import Engine
-from pyeng.main.engine_config import EngineConfigs
+from pyeng.main.engine_config import EngineConfig
 from pyeng.utils import exceptions
 
 
@@ -21,7 +21,7 @@ def reset_engine_singleton():
 
 
 class TestEngine:
-  configs = EngineConfigs.get_default_configs()
+  configs = EngineConfig.get_default_configs()
 
   def test_singleton_behavior(self):
     engine = Engine.create()

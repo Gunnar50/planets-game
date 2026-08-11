@@ -1,7 +1,7 @@
 from pyeng.components.system.state_manager import State
 
 
-class EngineConfigs:
+class EngineConfig:
   window_width = 1280
   window_height = 720
   ui_size = 1.0
@@ -22,9 +22,16 @@ class EngineConfigs:
   debug = True
   is_editor = False
 
+  # World settings
+  map_width: int
+  map_height: int
+  tile_width: int
+  tile_height: int
+  scale_factor: int
+
   # Sorting by Y axis is used for top down games
   sort_by_y_axis = False
 
   @staticmethod
-  def get_default_configs() -> 'type[EngineConfigs]':
-    return EngineConfigs
+  def get_default_configs() -> 'type[EngineConfig]':
+    return EngineConfig

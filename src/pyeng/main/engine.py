@@ -4,7 +4,7 @@ from pyeng.components.system.render import RenderSystem
 from pyeng.components.system.state_manager import StateManager
 from pyeng.components.system.system_manager import system_manager
 from pyeng.components.system.window import Window
-from pyeng.main.engine_config import EngineConfigs
+from pyeng.main.engine_config import EngineConfig
 from pyeng.main.engine_files import EngineFiles
 from pyeng.utils import exceptions
 from pyeng.utils import key_mappings
@@ -15,7 +15,7 @@ from pyeng.utils.error_manager import ErrorManager
 class Engine:
   __instance: 'Engine | None' = None
 
-  def __init__(self, configs: type[EngineConfigs]):
+  def __init__(self, configs: type[EngineConfig]):
     self.window: Window
     self.input: Input
     self.render_system: RenderSystem
@@ -47,22 +47,23 @@ class Engine:
         f"Can't create engine - assets folder not found in root directory: {EngineFiles.ROOT_FOLDER}."
       )
 
-  def create_global_components(self, configs: type[EngineConfigs]):
+  def create_global_components(self, configs: type[EngineConfig]):
     # Create global systems
     ErrorManager(EngineFiles.ERROR_FOLDER)
     Debugger(configs.debug)
     # BackgroundLoader()
 
-  def create_engine_components(self, configs: type[EngineConfigs]):
+  def create_engine_components(self, config: type[EngineConfig]):
     # Create engine components
     self.window = Window(
-      window_width=configs.window_width,
-      window_height=configs.window_height,
-      fullscreen=configs.fullscreen,
-      caption=configs.title,
-      fps=configs.fps,
-      vsync=configs.vsync,
-      background_colour=configs.background_colour,
+      window_width=config.window_width,
+      window_height=config.window_height,
+      fullscreen=config.fullscreen,
+      caption=config.title,
+      fps=config.fps,
+      vsync=config.vsync,
+      background_colour=config.background_colour,
+      game_config=config,
     )
 
     # Create render system
@@ -70,10 +71,14 @@ class Engine:
     self.assets_manager = AssetsManager()
 
     # Set up keyboard and mouse inputs
-    self.input = Input(EngineFiles.GAME_MAPPINGS, key_mappings.GameMapping)
+    self.input = Input(
+      EngineFiles.GAME_MAPPINGS,
+      key_mappings.GameMapping,
+      config,
+    )
     self.state_manager = StateManager(
-      configs.default_state,
-      configs.initial_state,
+      config.default_state,
+      config.initial_state,
     )
     # self.timer = FrameTimer(configs.fps)
 
@@ -102,7 +107,7 @@ class Engine:
   @classmethod
   def create(
     cls,
-    configs: type[EngineConfigs] = EngineConfigs.get_default_configs(),
+    configs: type[EngineConfig] = EngineConfig.get_default_configs(),
   ) -> 'Engine':
     if cls.__instance is not None:
       raise exceptions.IllegalStateException(

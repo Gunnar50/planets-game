@@ -1,6 +1,6 @@
 import pygame
 
-from prototype.main.configs.build_config import BuildConfig
+from prototype.main.configs.game_config import GameConfig
 from prototype.scene.game_scene import GameScene
 from pyeng.components.system.game_manager import GameManager
 from pyeng.main.engine import Engine
@@ -24,7 +24,7 @@ class EngineTester:
 
 class GameApp:
   def __init__(self) -> None:
-    self.engine = Engine.create(BuildConfig)
+    self.engine = Engine.create(GameConfig)
     self.input = self.engine.input
     self.window = self.engine.window
 

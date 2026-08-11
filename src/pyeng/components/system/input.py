@@ -4,9 +4,9 @@ import time
 
 import pygame
 
-from prototype.main.configs.build_config import BuildConfig
 from pyeng.components.game.game_component import BaseGameComponent
 from pyeng.components.system.system_component import SystemComponent
+from pyeng.main.engine_config import EngineConfig
 from pyeng.utils import api
 from pyeng.utils import io
 from pyeng.utils import key_mappings
@@ -49,20 +49,24 @@ class Input(SystemComponent):
     self,
     key_mappings_path: pathlib.Path,
     mapping_type: type[key_mappings.MappingBase],
+    game_config: type[EngineConfig],
   ):
     SystemComponent.__init__(self)
-    self.config = io.load_model_from_json(key_mappings_path, api.InputConfig)
+    self.game_config = game_config
+    self.input_config = io.load_model_from_json(
+      key_mappings_path, api.InputConfig
+    )
     self.input = {
       mapping_type(mapping.label): InputState(
         mapping.label, mapping.type, mapping.input_name, mapping.input_id
       )
-      for mapping in self.config.config
+      for mapping in self.input_config.config
     }
     self.mapping_type = mapping_type
     self.modifier_keys = []
 
     self.keyboard = Keyboard(self.input)
-    self.mouse = Mouse(self.input)
+    self.mouse = Mouse(self.input, game_config)
 
   def pressed(
     self,
@@ -104,7 +108,10 @@ class Input(SystemComponent):
 
 
 class Keyboard:
-  def __init__(self, input_config: dict[key_mappings.MappingBase, InputState]):
+  def __init__(
+    self,
+    input_config: dict[key_mappings.MappingBase, InputState],
+  ):
     self.input = input_config
 
   def update(self, event: pygame.event.Event) -> None:
@@ -124,23 +131,22 @@ class Keyboard:
 
 
 class Mouse:
-  def __init__(self, input_config: dict[key_mappings.MappingBase, InputState]):
+  def __init__(
+    self,
+    input_config: dict[key_mappings.MappingBase, InputState],
+    game_config: type[EngineConfig],
+  ):
+    self.game_config = game_config
     self.input = input_config
     self.position = api.Position(0, 0)
     self.ui_position = api.Position(0, 0)
     self.movement = api.Position(0, 0)
     self._interactive_components: list[BaseGameComponent] = []
 
-  def get_position(self) -> api.Position:
-    return api.Position(
-      self.position.x // BuildConfig.tile_width,
-      self.position.y // BuildConfig.tile_height,
-    )
-
   def update(self, event: pygame.event.Event) -> None:
     mx, my = pygame.mouse.get_pos()
     self.position = api.Position(
-      mx // BuildConfig.scale_factor, my // BuildConfig.scale_factor
+      mx // self.game_config.scale_factor, my // self.game_config.scale_factor
     )
     self.ui_x, self.ui_y = self.position.x // 2, self.position.y // 2
 

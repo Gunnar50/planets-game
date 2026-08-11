@@ -1,9 +1,9 @@
 import pygame
 
-from prototype.main.game_state import RenderGroup
 from pyeng.components.game.game_component import BaseGameComponent
-from pyeng.main.engine_config import EngineConfigs
+from pyeng.main.engine_config import EngineConfig
 from pyeng.utils.types import Colour
+from pyeng.utils.types import RenderGroup
 from pyeng.utils.types import SortingKey
 
 
@@ -26,7 +26,7 @@ class Renderer(BaseGameComponent):
     self.order_in_layer = order_in_layer
 
     # Sort by layer first, then order in layer, then y position for 2d top view
-    if EngineConfigs.sort_by_y_axis:
+    if EngineConfig.sort_by_y_axis:
       self.sorting_key = self._get_y_sort_key
     else:
       self.sorting_key = self._get_flat_sort_key

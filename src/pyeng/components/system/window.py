@@ -2,9 +2,9 @@ import time
 
 import pygame
 
-from prototype.main.configs.build_config import BuildConfig
-from prototype.main.game_state import RenderGroup
 from pyeng.components.system.system_component import SystemComponent
+from pyeng.main.engine_config import EngineConfig
+from pyeng.utils.types import RenderGroup
 
 
 class Window(SystemComponent):
@@ -24,6 +24,7 @@ class Window(SystemComponent):
     fps: int,
     vsync: bool,
     background_colour: tuple[int, int, int],
+    game_config: type[EngineConfig],
   ):
     SystemComponent.__init__(self)
     pygame.init()
@@ -33,6 +34,7 @@ class Window(SystemComponent):
     self.background_colour = background_colour
     self.window_width = window_width
     self.window_height = window_height
+    self.game_config = game_config
     self.start_time = time.time()
 
     # Main surface where all other surfaces gets blit to
@@ -43,8 +45,8 @@ class Window(SystemComponent):
     # Game display
     self.game_display = pygame.Surface(
       (
-        window_width // BuildConfig.scale_factor,
-        window_height // BuildConfig.scale_factor,
+        window_width // self.game_config.scale_factor,
+        window_height // self.game_config.scale_factor,
       )
     ).convert_alpha()
 

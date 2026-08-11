@@ -2,9 +2,9 @@ from collections import defaultdict
 
 import pygame
 
-from prototype.main.game_state import RenderGroup
 from pyeng.components.game.builtin.shape_render import Renderer
 from pyeng.components.system.system_component import SystemComponent
+from pyeng.utils.types import RenderGroup
 
 
 class RenderSystem(SystemComponent):

@@ -1,7 +1,7 @@
 from prototype.content.custom.player_movement import PlayerMovement
-from prototype.main.game_state import RenderGroup
 from pyeng.components.game.builtin.shape_render import SpriteRenderer
 from pyeng.components.game.prefab import Prefab
+from pyeng.utils.types import RenderGroup
 
 
 class PlayerPrefab(Prefab):
