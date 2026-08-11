@@ -21,7 +21,7 @@ def reset_engine_singleton():
 
 
 class TestEngine:
-  configs = EngineConfig.get_default_configs()
+  configs = EngineConfig
 
   def test_singleton_behavior(self):
     engine = Engine.create()

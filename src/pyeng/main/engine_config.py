@@ -1,7 +1,9 @@
 from pyeng.components.system.state_manager import State
+from pyeng.utils.version import Version
 
 
 class EngineConfig:
+  version = Version(0, 0, 0)
   window_width = 1280
   window_height = 720
   ui_size = 1.0
@@ -27,11 +29,15 @@ class EngineConfig:
   map_height: int
   tile_width: int
   tile_height: int
-  scale_factor: int
+  scale_factor = 1
 
   # Sorting by Y axis is used for top down games
   sort_by_y_axis = False
 
-  @staticmethod
-  def get_default_configs() -> 'type[EngineConfig]':
-    return EngineConfig
+  def __init_subclass__(cls, **kwargs) -> None:
+    required = {
+      k for k in EngineConfig.__annotations__ if k not in EngineConfig.__dict__
+    }
+    missing = required - set(cls.__dict__)
+    if missing:
+      raise TypeError(f'{cls.__name__} must define: {missing}')

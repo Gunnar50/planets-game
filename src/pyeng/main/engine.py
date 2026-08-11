@@ -105,10 +105,7 @@ class Engine:
     # self.window.destroy()
 
   @classmethod
-  def create(
-    cls,
-    configs: type[EngineConfig] = EngineConfig.get_default_configs(),
-  ) -> 'Engine':
+  def create(cls, configs: type[EngineConfig] = EngineConfig) -> 'Engine':
     if cls.__instance is not None:
       raise exceptions.IllegalStateException(
         'Engine has already been initialised!'
