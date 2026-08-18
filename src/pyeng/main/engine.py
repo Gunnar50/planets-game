@@ -14,15 +14,16 @@ from pyeng.utils.error_manager import ErrorManager
 class Engine:
   __instance: 'Engine | None' = None
 
-  def __init__(self, configs: type[EngineConfig]):
+  def __init__(self, config: type[EngineConfig]):
+    self.config = config
     self.window: Window
     self.input: Input
     self.render_system: RenderSystem
     self.system_manager = system_manager
 
-    self.check_assets_folder(configs)
-    self.create_engine_components(configs)
-    self.create_global_components(configs)
+    self.check_assets_folder()
+    self.create_engine_components()
+    self.create_global_components()
 
     self.close_flag = False
 
@@ -40,44 +41,44 @@ class Engine:
   def render(self) -> None:
     self.render_system.render(self.window.display_map)
 
-  def check_assets_folder(self, configs: type[EngineConfig]):
-    if not configs.data_folder.exists():
+  def check_assets_folder(self):
+    if not self.config.data_folder.exists():
       raise exceptions.IllegalStateException(
-        f"Can't create engine - assets folder not found in root directory: {configs.project_root}."
+        f"Can't create engine - assets folder not found in root directory: {self.config.project_root}."
       )
 
-  def create_global_components(self, configs: type[EngineConfig]):
+  def create_global_components(self) -> None:
     # Create global systems
-    ErrorManager(configs.error_logs)
-    Debugger(configs.debug)
+    ErrorManager(self.config.error_logs)
+    Debugger(self.config.debug)
     # BackgroundLoader()
 
-  def create_engine_components(self, config: type[EngineConfig]):
+  def create_engine_components(self) -> None:
     # Create engine components
     self.window = Window(
-      window_width=config.window_width,
-      window_height=config.window_height,
-      fullscreen=config.fullscreen,
-      caption=config.title,
-      fps=config.fps,
-      vsync=config.vsync,
-      background_colour=config.background_colour,
-      game_config=config,
+      window_width=self.config.window_width,
+      window_height=self.config.window_height,
+      fullscreen=self.config.fullscreen,
+      caption=self.config.title,
+      fps=self.config.fps,
+      vsync=self.config.vsync,
+      background_colour=self.config.background_colour,
+      game_config=self.config,
     )
 
     # Create render system
     self.render_system = RenderSystem()
-    self.assets_manager = AssetsManager(config)
+    self.assets_manager = AssetsManager(self.config)
 
     # Set up keyboard and mouse inputs
     self.input = Input(
-      config.game_mappings,
+      self.config.game_mappings,
       key_mappings.GameMapping,
-      config,
+      self.config,
     )
     self.state_manager = StateManager(
-      config.default_state,
-      config.initial_state,
+      self.config.default_state,
+      self.config.initial_state,
     )
     # self.timer = FrameTimer(configs.fps)
 
@@ -104,10 +105,10 @@ class Engine:
     # self.window.destroy()
 
   @classmethod
-  def create(cls, configs: type[EngineConfig] = EngineConfig) -> 'Engine':
+  def create(cls, config: type[EngineConfig] = EngineConfig) -> 'Engine':
     if cls.__instance is not None:
       raise exceptions.IllegalStateException(
         'Engine has already been initialised!'
       )
 
-    return cls(configs)
+    return cls(config)
