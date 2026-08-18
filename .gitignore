@@ -5,6 +5,8 @@ PyEng/__pycache__
 ErrorLogs/
 *.egg-info/
 build/
+.abacusai
 
 # Key mappings are generated locally
 src/shared/key_mappings.py
+

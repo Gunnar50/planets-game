@@ -5,7 +5,6 @@ from pyeng.components.system.state_manager import StateManager
 from pyeng.components.system.system_manager import system_manager
 from pyeng.components.system.window import Window
 from pyeng.main.engine_config import EngineConfig
-from pyeng.main.engine_files import EngineFiles
 from pyeng.utils import exceptions
 from pyeng.utils import key_mappings
 from pyeng.utils.debugger import Debugger
@@ -21,7 +20,7 @@ class Engine:
     self.render_system: RenderSystem
     self.system_manager = system_manager
 
-    self.check_assets_folder()
+    self.check_assets_folder(configs)
     self.create_engine_components(configs)
     self.create_global_components(configs)
 
@@ -41,15 +40,15 @@ class Engine:
   def render(self) -> None:
     self.render_system.render(self.window.display_map)
 
-  def check_assets_folder(self):
-    if not EngineFiles.DATA_FOLDER.exists():
+  def check_assets_folder(self, configs: type[EngineConfig]):
+    if not configs.data_folder.exists():
       raise exceptions.IllegalStateException(
-        f"Can't create engine - assets folder not found in root directory: {EngineFiles.ROOT_FOLDER}."
+        f"Can't create engine - assets folder not found in root directory: {configs.project_root}."
       )
 
   def create_global_components(self, configs: type[EngineConfig]):
     # Create global systems
-    ErrorManager(EngineFiles.ERROR_FOLDER)
+    ErrorManager(configs.error_logs)
     Debugger(configs.debug)
     # BackgroundLoader()
 
@@ -68,11 +67,11 @@ class Engine:
 
     # Create render system
     self.render_system = RenderSystem()
-    self.assets_manager = AssetsManager()
+    self.assets_manager = AssetsManager(config)
 
     # Set up keyboard and mouse inputs
     self.input = Input(
-      EngineFiles.GAME_MAPPINGS,
+      config.game_mappings,
       key_mappings.GameMapping,
       config,
     )

@@ -2,11 +2,11 @@ import dataclasses
 import pathlib
 from typing import Any
 
+from prototype.main.configs.game_config import GameConfig
 from prototype.repository.game_components import Blueprint
 from prototype.repository.game_components import EntityBlueprint
 from prototype.repository.game_components import ItemBlueprint
 from prototype.repository.game_components import TileBlueprint
-from prototype.repository.game_files import GameFiles
 from pyeng.utils import exceptions
 from pyeng.utils import io
 from pyeng.utils.hash_registry import HashRegistry
@@ -58,7 +58,7 @@ class BlueprintLoader:
 class EntityLoader(BlueprintLoader):
   file_prefix = 'entity_info'
   blueprint_type = EntityBlueprint
-  folder = GameFiles.get_entities_folder()
+  folder = GameConfig.entities_folder
 
   @classmethod
   def load(cls) -> HashRegistry[EntityBlueprint]:
@@ -74,7 +74,7 @@ class EntityLoader(BlueprintLoader):
 class TilesLoader(BlueprintLoader):
   file_prefix = 'tile_info'
   blueprint_type = TileBlueprint
-  folder = GameFiles.get_tiles_folder()
+  folder = GameConfig.tiles_folder
 
   @classmethod
   def load(cls) -> HashRegistry[TileBlueprint]:
@@ -88,7 +88,7 @@ class TilesLoader(BlueprintLoader):
 class ItemLoader(BlueprintLoader):
   file_prefix = 'item_info'
   blueprint_type = ItemBlueprint
-  folder = GameFiles.get_items_folder()
+  folder = GameConfig.items_folder
 
   @classmethod
   def load(cls) -> HashRegistry[ItemBlueprint]:

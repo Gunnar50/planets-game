@@ -1,3 +1,5 @@
+import pathlib
+
 from pyeng.components.system.state_manager import State
 from pyeng.utils.version import Version
 
@@ -33,6 +35,15 @@ class EngineConfig:
 
   # Sorting by Y axis is used for top down games
   sort_by_y_axis = False
+
+  # Project folder paths. Override these in your game config to use
+  # different names or locations for any of these folders.
+  project_root = pathlib.Path.cwd()
+  data_folder = project_root / 'data'
+  assets = data_folder
+  error_logs: pathlib.Path
+  # Find better way to handle mappings
+  game_mappings: pathlib.Path
 
   def __init_subclass__(cls, **kwargs) -> None:
     required = {

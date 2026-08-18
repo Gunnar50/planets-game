@@ -3,6 +3,7 @@ from unittest import mock
 import pygame
 import pytest
 
+from pyeng.components.system.system_manager import system_manager
 from pyeng.main.engine import Engine
 from pyeng.main.engine_config import EngineConfig
 from pyeng.utils import exceptions
@@ -18,6 +19,8 @@ def mock_window():
 @pytest.fixture(autouse=True)
 def reset_engine_singleton():
   Engine._Engine__instance = None
+  system_manager.system_components_by_name = {}
+  yield
 
 
 class TestEngine:
@@ -39,9 +42,9 @@ class TestEngine:
     engine_instance = Engine.get_instance()
     assert isinstance(engine_instance, Engine)
 
-  @mock.patch('EngineFiles.DATA_FOLDER.exists')
-  def test_missing_assets_folder(self, mock_exists: mock.Mock):
-    # Patch path.exists to return False
-    mock_exists.return_value = False
+  @mock.patch.object(EngineConfig, 'data_folder', mock.Mock())
+  def test_missing_assets_folder(self, mock_data_folder: mock.Mock):
+    # Patch data_folder.exists to return False
+    mock_data_folder.exists.return_value = False
     with pytest.raises(exceptions.IllegalStateException):
       Engine.create()

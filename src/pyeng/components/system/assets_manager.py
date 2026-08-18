@@ -2,13 +2,13 @@ import pathlib
 
 import pygame
 
-from prototype.repository.game_files import GameFiles
 from pyeng.components.system.system_component import SystemComponent
+from pyeng.main.engine_config import EngineConfig
 from pyeng.utils.logger import Logger
 
 
 class AssetsManager(SystemComponent):
-  def __init__(self) -> None:
+  def __init__(self, config: type[EngineConfig]) -> None:
     SystemComponent.__init__(self)
 
     # Maps a clean filename string to its pathlib.Path object
@@ -19,7 +19,7 @@ class AssetsManager(SystemComponent):
 
     # Supported engine image formats
     self._valid_extensions = {'.png', '.jpg', '.jpeg', '.bmp', '.webp'}
-    self._scan_assets(GameFiles.get_entities_folder())
+    self._scan_assets(config.assets)
 
   def _scan_assets(self, assets_folder: pathlib.Path) -> None:
     if not assets_folder.exists():

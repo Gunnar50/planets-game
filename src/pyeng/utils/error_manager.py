@@ -10,7 +10,6 @@ import traceback
 from types import TracebackType
 
 from pyeng.components.system.system_component import SystemComponent
-from pyeng.main.engine_files import EngineFiles
 from pyeng.utils import exceptions
 
 
@@ -18,10 +17,7 @@ class ErrorManager(SystemComponent):
   _log_directory: pathlib.Path
   _logged_exceptions: set[int]
 
-  def __init__(
-    self,
-    log_dir: pathlib.Path = EngineFiles.ROOT_FOLDER / 'DefaultErrorLogs',
-  ):
+  def __init__(self, log_dir: pathlib.Path):
     """
     Initialize the error manager with a directory for log files.
     Log files will be named dynamically based on date and error type.
