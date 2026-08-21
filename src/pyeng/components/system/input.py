@@ -1,4 +1,3 @@
-import pathlib
 import sys
 import time
 
@@ -16,13 +15,9 @@ class InputState:
   def __init__(
     self,
     label: str,
-    type: api.InputType,
-    input_name: str,
     input_id: int,
   ):
     self.label = label
-    self.type = type
-    self.input_name = input_name
     self.input_id = input_id
 
     self.pressed = False
@@ -47,22 +42,22 @@ class InputState:
 class Input(SystemComponent):
   def __init__(
     self,
-    key_mappings_path: pathlib.Path,
     mapping_type: type[key_mappings.MappingBase],
     game_config: type[EngineConfig],
   ):
     SystemComponent.__init__(self)
     self.game_config = game_config
+    self.mapping_type = mapping_type
     self.input_config = io.load_model_from_json(
-      key_mappings_path, api.InputConfig
+      self.game_config.game_mappings, api.InputConfig
     )
     self.input = {
       mapping_type(mapping.label): InputState(
-        mapping.label, mapping.type, mapping.input_name, mapping.input_id
+        mapping.label,
+        mapping.input_id,
       )
       for mapping in self.input_config.config
     }
-    self.mapping_type = mapping_type
     self.modifier_keys = []
 
     self.keyboard = Keyboard(self.input)
@@ -121,12 +116,12 @@ class Keyboard:
         sys.exit()
 
       for state in self.input.values():
-        if state.type == api.InputType.BUTTON and event.key == state.input_id:
+        if event.key == state.input_id:
           state.press()
 
     elif event.type == pygame.KEYUP:
       for state in self.input.values():
-        if state.type == api.InputType.BUTTON and event.key == state.input_id:
+        if event.key == state.input_id:
           state.unpress()
 
 
@@ -155,12 +150,12 @@ class Mouse:
 
     if event.type == pygame.MOUSEBUTTONDOWN:
       for state in self.input.values():
-        if state.type == api.InputType.MOUSE and event.button == state.input_id:
+        if event.button == state.input_id:
           state.press()
 
     elif event.type == pygame.MOUSEBUTTONUP:
       for state in self.input.values():
-        if state.type == api.InputType.MOUSE and event.button == state.input_id:
+        if event.button == state.input_id:
           state.unpress()
 
   def register_interactive(self, component: BaseGameComponent) -> None:

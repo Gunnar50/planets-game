@@ -20,15 +20,8 @@ class RenderObjects(pydantic.BaseModel):
   model_config = pydantic.ConfigDict(arbitrary_types_allowed=True)
 
 
-class InputType(enum.Enum):
-  BUTTON = 'button'
-  MOUSE = 'mouse'
-
-
 class InputMappings(pydantic.BaseModel):
   label: str
-  type: InputType
-  input_name: str
   input_id: int
 
 

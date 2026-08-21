@@ -72,7 +72,6 @@ class Engine:
 
     # Set up keyboard and mouse inputs
     self.input = Input(
-      self.config.game_mappings,
       key_mappings.GameMapping,
       self.config,
     )
