@@ -26,9 +26,6 @@ test:
 editor:
 	python level_editor.py
 
-generate_mappings:
-	./scripts/generate_mappings.sh
-
 uv-install:
 	cd src/PyEng && ../../scripts/uv_install.sh
 

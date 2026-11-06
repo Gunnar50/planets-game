@@ -2,7 +2,6 @@ import pathlib
 
 from prototype.main.game_state import GameState
 from pyeng.main.engine_config import EngineConfig
-from pyeng.utils import key_mappings
 from pyeng.utils.version import Version
 
 
@@ -37,8 +36,6 @@ class GameConfig(EngineConfig):
   data_folder = project_root / 'data'
   assets = data_folder
   error_logs = project_root / 'error_logs'
-  game_mappings = data_folder / 'config/game_mappings.json'
-  game_mappings_model = key_mappings.GameMapping
 
   items_folder = data_folder / 'items'
   entities_folder = data_folder / 'entities'

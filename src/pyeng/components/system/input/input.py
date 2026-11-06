@@ -55,25 +55,14 @@ class Input(SystemComponent):
     return self.input[input_id]
 
   # TODO: Get this to work when passing a key in
-  # def pressed(
-  #   self,
-  #   key: key_mappings.MappingBase,
-  #   modifier: key_mappings.MappingBase | None = None,
-  # ) -> bool:
-  #   if modifier:
-  #     if modifier in self.modifier_keys:
-  #       return self.input[key].just_pressed if key in self.input else False
-  #   else:
-  #     if not self.modifier_keys:
-  #       return self.input[key].just_pressed if key in self.input else False
-
+  # def pressed(self, key, modifier) -> bool:
   #   return False
 
-  # def holding(self, key: key_mappings.MappingBase) -> bool:
-  #   return self.input[key].pressed if key in self.input else False
+  # def holding(self, key) -> bool:
+  #   return False
 
-  # def released(self, key: key_mappings.MappingBase) -> bool:
-  #   return self.input[key].just_released if key in self.input else False
+  # def released(self, key) -> bool:
+  #   return False
 
   def update(self) -> None:
     # Reset input flags

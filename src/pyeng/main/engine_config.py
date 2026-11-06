@@ -1,8 +1,6 @@
 import pathlib
-from typing import ClassVar
 
 from pyeng.components.system.state_manager import State
-from pyeng.utils import key_mappings
 from pyeng.utils.version import Version
 
 
@@ -44,9 +42,6 @@ class EngineConfig:
   data_folder = project_root / 'data'
   assets = data_folder
   error_logs: pathlib.Path
-  # Find better way to handle mappings
-  game_mappings: pathlib.Path
-  game_mappings_model: ClassVar[type[key_mappings.MappingBase]]
 
   def __init_subclass__(cls, **kwargs) -> None:
     required = {
