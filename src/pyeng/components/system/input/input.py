@@ -6,7 +6,6 @@ import pygame
 from pyeng.components.game.game_component import BaseGameComponent
 from pyeng.components.system.system_component import SystemComponent
 from pyeng.main.engine_config import EngineConfig
-from pyeng.utils import api
 
 
 class InputState:
@@ -116,16 +115,16 @@ class Mouse:
   ):
     self.game_config = game_config
     self.input = input_states
-    # TODO: Remove api.Position -> use pygame.Vector
-    self.position = api.Position(0, 0)
-    self.ui_position = api.Position(0, 0)
-    self.movement = api.Position(0, 0)
+    self.position = pygame.Vector2(0, 0)
+    self.ui_position = pygame.Vector2(0, 0)
+    self.movement = pygame.Vector2(0, 0)
     self._interactive_components: list[BaseGameComponent] = []
 
   def update(self, event: pygame.event.Event) -> None:
     mx, my = pygame.mouse.get_pos()
-    self.position = api.Position(
-      mx // self.game_config.scale_factor, my // self.game_config.scale_factor
+    self.position = pygame.Vector2(
+      mx // self.game_config.scale_factor,
+      my // self.game_config.scale_factor,
     )
     self.ui_x, self.ui_y = self.position.x // 2, self.position.y // 2
 
