@@ -1,12 +1,11 @@
 from pyeng.components.system.assets_manager import AssetsManager
-from pyeng.components.system.input import Input
+from pyeng.components.system.input.input import Input
 from pyeng.components.system.render import RenderSystem
 from pyeng.components.system.state_manager import StateManager
 from pyeng.components.system.system_manager import system_manager
 from pyeng.components.system.window import Window
 from pyeng.main.engine_config import EngineConfig
 from pyeng.utils import exceptions
-from pyeng.utils import key_mappings
 from pyeng.utils.debugger import Debugger
 from pyeng.utils.error_manager import ErrorManager
 
@@ -71,10 +70,7 @@ class Engine:
     self.assets_manager = AssetsManager(self.config)
 
     # Set up keyboard and mouse inputs
-    self.input = Input(
-      key_mappings.GameMapping,
-      self.config,
-    )
+    self.input = Input(self.config)
     self.state_manager = StateManager(
       self.config.default_state,
       self.config.initial_state,

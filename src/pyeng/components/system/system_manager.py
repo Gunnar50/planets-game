@@ -6,7 +6,7 @@ from pyeng.utils.logger import Logger
 if TYPE_CHECKING:
   from pyeng.components.system.assets_manager import AssetsManager
   from pyeng.components.system.game_manager import GameManager
-  from pyeng.components.system.input import Input
+  from pyeng.components.system.input.input import Input
   from pyeng.components.system.render import RenderSystem
   from pyeng.components.system.system_component import SystemComponent
   from pyeng.components.system.window import Window

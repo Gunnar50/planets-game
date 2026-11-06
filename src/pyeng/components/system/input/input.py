@@ -7,8 +7,6 @@ from pyeng.components.game.game_component import BaseGameComponent
 from pyeng.components.system.system_component import SystemComponent
 from pyeng.main.engine_config import EngineConfig
 from pyeng.utils import api
-from pyeng.utils import io
-from pyeng.utils import key_mappings
 
 
 class InputState:
@@ -40,58 +38,48 @@ class InputState:
 
 
 class Input(SystemComponent):
-  def __init__(
-    self,
-    mapping_type: type[key_mappings.MappingBase],
-    game_config: type[EngineConfig],
-  ):
+  def __init__(self, game_config: type[EngineConfig]):
     SystemComponent.__init__(self)
     self.game_config = game_config
-    self.mapping_type = mapping_type
-    self.input_config = io.load_model_from_json(
-      self.game_config.game_mappings, api.InputConfig
-    )
-    self.input = {
-      mapping_type(mapping.label): InputState(
-        mapping.label,
-        mapping.input_id,
-      )
-      for mapping in self.input_config.config
-    }
+    self.input: dict[int, InputState] = {}
     self.modifier_keys = []
 
     self.keyboard = Keyboard(self.input)
     self.mouse = Mouse(self.input, game_config)
 
-  def pressed(
-    self,
-    key: key_mappings.MappingBase,
-    modifier: key_mappings.MappingBase | None = None,
-  ) -> bool:
-    if modifier:
-      if modifier in self.modifier_keys:
-        return self.input[key].just_pressed if key in self.input else False
-    else:
-      if not self.modifier_keys:
-        return self.input[key].just_pressed if key in self.input else False
+  def get_or_create_state(self, input_id: int, label: str = '') -> InputState:
+    if input_id not in self.input:
+      self.input[input_id] = InputState(
+        label=label or f'raw_{input_id}',
+        input_id=input_id,
+      )
+    return self.input[input_id]
 
-    return False
+  # TODO: Get this to work when passing a key in
+  # def pressed(
+  #   self,
+  #   key: key_mappings.MappingBase,
+  #   modifier: key_mappings.MappingBase | None = None,
+  # ) -> bool:
+  #   if modifier:
+  #     if modifier in self.modifier_keys:
+  #       return self.input[key].just_pressed if key in self.input else False
+  #   else:
+  #     if not self.modifier_keys:
+  #       return self.input[key].just_pressed if key in self.input else False
 
-  def holding(self, key: key_mappings.MappingBase) -> bool:
-    return self.input[key].pressed if key in self.input else False
+  #   return False
 
-  def released(self, key: key_mappings.MappingBase) -> bool:
-    return self.input[key].just_released if key in self.input else False
+  # def holding(self, key: key_mappings.MappingBase) -> bool:
+  #   return self.input[key].pressed if key in self.input else False
 
-  def update(self):
+  # def released(self, key: key_mappings.MappingBase) -> bool:
+  #   return self.input[key].just_released if key in self.input else False
+
+  def update(self) -> None:
+    # Reset input flags
     for state in self.input.values():
       state.update()
-
-    self.modifier_keys = [
-      self.mapping_type(state.label)
-      for state in self.input.values()
-      if state.pressed
-    ]
 
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
@@ -103,11 +91,8 @@ class Input(SystemComponent):
 
 
 class Keyboard:
-  def __init__(
-    self,
-    input_config: dict[key_mappings.MappingBase, InputState],
-  ):
-    self.input = input_config
+  def __init__(self, input_states: dict[int, InputState]):
+    self.input = input_states
 
   def update(self, event: pygame.event.Event) -> None:
     if event.type == pygame.KEYDOWN:
@@ -115,24 +100,23 @@ class Keyboard:
         pygame.quit()
         sys.exit()
 
-      for state in self.input.values():
-        if event.key == state.input_id:
-          state.press()
+      if state := self.input.get(event.key):
+        state.press()
 
     elif event.type == pygame.KEYUP:
-      for state in self.input.values():
-        if event.key == state.input_id:
-          state.unpress()
+      if state := self.input.get(event.key):
+        state.unpress()
 
 
 class Mouse:
   def __init__(
     self,
-    input_config: dict[key_mappings.MappingBase, InputState],
+    input_states: dict[int, InputState],
     game_config: type[EngineConfig],
   ):
     self.game_config = game_config
-    self.input = input_config
+    self.input = input_states
+    # TODO: Remove api.Position -> use pygame.Vector
     self.position = api.Position(0, 0)
     self.ui_position = api.Position(0, 0)
     self.movement = api.Position(0, 0)
