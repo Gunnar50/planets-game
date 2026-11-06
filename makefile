@@ -17,6 +17,7 @@ clean:
 	rm -rf __pycache__ *.pyc
 
 run:
+	make generate-actions
 	./scripts/uv_run.sh main.py
 
 test:
@@ -33,3 +34,7 @@ uv-install:
 
 uv-update:
 	cd src/PyEng && ../../scripts/uv_update.sh
+
+generate-actions:
+	python src/pyeng/components/system/input/generate_actions.py
+	ruff format data/config/input_actions.py

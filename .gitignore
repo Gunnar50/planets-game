@@ -2,11 +2,12 @@
 __pycache__
 PyEng/__pycache__
 .pytype
-ErrorLogs/
+error_logs/
 *.egg-info/
 build/
 .abacusai
 
 # Key mappings are generated locally
 src/shared/key_mappings.py
+data/config/input_actions.py
 

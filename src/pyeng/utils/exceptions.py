@@ -55,3 +55,7 @@ class NotDataclass(ApplicationException):
 
 class NoGameObjectException(ApplicationException):
   """Raise if a component does not have a game object attach to it"""
+
+
+class InputSchemaException(ApplicationException):
+  """Raise if there are any errors with the input json files"""

@@ -4,7 +4,6 @@ from prototype.main.configs.game_config import GameConfig
 from prototype.scene.game_scene import GameScene
 from pyeng.components.system.game_manager import GameManager
 from pyeng.main.engine import Engine
-from pyeng.utils import key_mappings
 
 if not pygame.IS_CE:
   raise Exception('Not running Pygame-CE')
@@ -38,11 +37,12 @@ class GameApp:
       delta_time = self.engine.window.delta_time
 
       # Events/Inputs
-      if self.input.pressed(key_mappings.GameMapping.DOWN):
-        print('DOWN')
-      if self.input.pressed(key_mappings.GameMapping.MOUSE_LEFT):
-        print('MOUSE_LEFT')
-        print(self.input.mouse.position)
+      # TODO: workout how these could work too
+      # if self.input.pressed(key_mappings.GameMapping.DOWN):
+      #   print('DOWN')
+      # if self.input.pressed(key_mappings.GameMapping.MOUSE_LEFT):
+      #   print('MOUSE_LEFT')
+      #   print(self.input.mouse.position)
 
       # Updates
       self.engine.update()
