@@ -1,11 +1,15 @@
 import sys
 import time
+from typing import TYPE_CHECKING
 
 import pygame
 
-from pyeng.components.game.game_component import BaseGameComponent
+from pyeng.components.system.input.input_map import get_input_id
 from pyeng.components.system.system_component import SystemComponent
 from pyeng.main.engine_config import EngineConfig
+
+if TYPE_CHECKING:
+  from pyeng.components.game.game_component import BaseGameComponent
 
 
 class InputState:
@@ -46,7 +50,8 @@ class Input(SystemComponent):
     self.keyboard = Keyboard(self.input)
     self.mouse = Mouse(self.input, game_config)
 
-  def get_or_create_state(self, input_id: int, label: str = '') -> InputState:
+  def get_or_create_state(self, input_key: str, label: str = '') -> InputState:
+    input_id = get_input_id(input_key)
     if input_id not in self.input:
       self.input[input_id] = InputState(
         label=label or f'raw_{input_id}',
@@ -130,11 +135,11 @@ class Mouse:
         if event.button == state.input_id:
           state.unpress()
 
-  def register_interactive(self, component: BaseGameComponent) -> None:
+  def register_interactive(self, component: 'BaseGameComponent') -> None:
     if component not in self._interactive_components:
       self._interactive_components.append(component)
 
-  def unregister_interactive(self, component: BaseGameComponent) -> None:
+  def unregister_interactive(self, component: 'BaseGameComponent') -> None:
     if component in self._interactive_components:
       self._interactive_components.remove(component)
 

@@ -1,4 +1,3 @@
-from data.config.input_actions import InputActions
 from pyeng.components.game.game_component import BaseGameComponent
 
 
@@ -13,10 +12,9 @@ class PlayerMovement(BaseGameComponent):
   def __init__(self, speed: float = 200):
     BaseGameComponent.__init__(self)
     self.speed = speed
-    input_actions = InputActions()
-    input_actions.player.enable()
-    self.move = input_actions.player.move
-    self.jump = input_actions.player.jump
+    self.input_actions.player.enable()
+    self.move = self.input_actions.player.move
+    self.jump = self.input_actions.player.jump
 
   def jump_action(self) -> None:
     print('Jump!')

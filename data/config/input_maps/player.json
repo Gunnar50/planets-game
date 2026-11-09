@@ -3,37 +3,37 @@
     "name": "move",
     "vector2": {
       "up": [
-        1073741906,
-        119
+        "up",
+        "w"
       ],
       "down": [
-        1073741905,
-        115
+        "down",
+        "s"
       ],
       "left": [
-        1073741904,
-        97
+        "left",
+        "a"
       ],
       "right": [
-        1073741903,
-        100
+        "right",
+        "d"
       ]
     }
   },
   {
     "name": "jump",
     "button": [
-      32
+      "space"
     ]
   },
   {
     "name": "axis 1d",
     "vector1": {
       "positive": [
-        1073741904
+        "l"
       ],
       "negative": [
-        1073741903
+        "h"
       ]
     }
   }

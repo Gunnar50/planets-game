@@ -59,3 +59,7 @@ class NoGameObjectException(ApplicationException):
 
 class InputSchemaException(ApplicationException):
   """Raise if there are any errors with the input json files"""
+
+
+class InvalidInputKey(ApplicationException):
+  """Raise if the Input Key does not exist"""

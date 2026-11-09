@@ -12,22 +12,22 @@ class ActionType(str, enum.Enum):
 
 
 class Vector2Mapping(pydantic.BaseModel):
-  up: list[int] = pydantic.Field(default_factory=list)
-  down: list[int] = pydantic.Field(default_factory=list)
-  left: list[int] = pydantic.Field(default_factory=list)
-  right: list[int] = pydantic.Field(default_factory=list)
+  up: list[str] = pydantic.Field(default_factory=list)
+  down: list[str] = pydantic.Field(default_factory=list)
+  left: list[str] = pydantic.Field(default_factory=list)
+  right: list[str] = pydantic.Field(default_factory=list)
 
 
 class Vector1Mapping(pydantic.BaseModel):
-  positive: list[int] = pydantic.Field(default_factory=list)
-  negative: list[int] = pydantic.Field(default_factory=list)
+  positive: list[str] = pydantic.Field(default_factory=list)
+  negative: list[str] = pydantic.Field(default_factory=list)
 
 
 class ActionConfig(pydantic.BaseModel):
   name: str
   vector2: Vector2Mapping | None = None
   vector1: Vector1Mapping | None = None
-  button: list[int] | None = None
+  button: list[str] | None = None
   action_type: ActionType | None = None
 
   @pydantic.model_validator(mode='after')

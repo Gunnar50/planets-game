@@ -55,10 +55,10 @@ def generate_from_dir(json_dir: str, output_path: str) -> None:
         )
 
       elif action.action_type == schemas.ActionType.VECTOR1 and action.vector1:
-        pos = action.vector1.positive
-        neg = action.vector1.negative
+        positive = action.vector1.positive
+        negative = action.vector1.negative
         lines.append(
-          f'    self.{act_name} = Vector1Action(self, get_states_func({pos}), get_states_func({neg}))'
+          f'    self.{act_name} = Vector1Action(self, get_states_func({positive}), get_states_func({negative}),)'
         )
 
       elif action.action_type == schemas.ActionType.VECTOR2 and action.vector2:
@@ -91,7 +91,6 @@ def generate_from_dir(json_dir: str, output_path: str) -> None:
       '      cls.__instance._initialized = False',
       '    return cls.__instance',
       '',
-      '',
       '  def __init__(self):',
       "    if getattr(self, '_initialized', False):",
       '      return',
@@ -105,9 +104,7 @@ def generate_from_dir(json_dir: str, output_path: str) -> None:
 
   lines.extend(
     [
-      '',
-      '',
-      '  def _get_states(self, input_ids: list[int]) -> list[InputState]:',
+      '  def _get_states(self, input_ids: list[str]) -> list[InputState]:',
       '    return [self._input_sys.get_or_create_state(k_id) for k_id in input_ids]',
     ]
   )

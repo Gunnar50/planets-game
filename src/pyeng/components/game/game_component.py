@@ -1,5 +1,6 @@
 from typing import TYPE_CHECKING
 
+from data.config.input_actions import InputActions
 from pyeng.components.system.system_manager import system_manager
 from pyeng.utils import exceptions
 
@@ -23,6 +24,7 @@ class BaseGameComponent:
     self.assets_manager = self.system_components.get_assets_manager()
     self.render_system = self.system_components.get_render()
     self.input_mouse = self.system_components.get_input().mouse
+    self.input_actions = InputActions()
     self.is_hovered = False
 
     # Check if child methods exists
