@@ -80,7 +80,7 @@ class Window(SystemComponent):
     self.delta_time = time.time() - self.previous_frame
     self.previous_frame = time.time()
     self.frame_log.append(self.delta_time)
-    self.frame_log[-self.fps_cap :]
+    self.frame_log = self.frame_log[-self.fps_cap :]
 
     self.swap_buffers()
     self.clear()
